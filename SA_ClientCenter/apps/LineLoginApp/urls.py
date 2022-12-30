@@ -15,9 +15,11 @@ Including another URLconf
 """
 
 from django.urls import path, re_path
-from LineLoginApp.views import callback, login
+from LineLoginApp.views import callback, index_page, in_page, logout
 
 urlpatterns = [
     re_path('^callback', callback),
-    path('login/', login)
+    path('index.html', index_page),
+    path('in', in_page),
+    path('logout', logout)
 ]
