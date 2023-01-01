@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+</head>
+<body>
+    <div class="top">
+        <p class="title_text">註冊</p>
+    </div>
+    <form action="">
+        <div class="input_frame">
+            <input class="inputa" type="text" name="realname" placeholder="請輸入真實姓名" value="">
+        </div>
+        <div class="input_frame">
+                <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="">
+        </div>
+        <div class="input_frame">
+                <input class="inputa" type="text" name="phone" placeholder="請輸入手機電話" value="">
+        </div>
+        <div class="input_frame">
+                <input class="inputa" type="text" name="email" placeholder="請輸入email" value="">
+        </div>
+        <div class="input_frame">
+                <input class="inputa" type="text" name="address" placeholder="請輸入聯絡地址" value="">
+        </div>
+
+        <div class="input_frame">
+            <div class="signup_frame">
+                <input type="submit" class="signup signup_right" value="更新">
+                <a href="logout"><input type="button" class="signup signup_right" value="登出"></a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

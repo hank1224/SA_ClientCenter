@@ -6,8 +6,10 @@ class UserData(models.Model):
     sLineID=models.CharField(max_length=33, blank=False, null=True)
     sAccount=models.CharField(max_length=20, blank=False, null=True, unique=True)
     sPassword=models.CharField(max_length=20, blank=False, null=True)
-    sName=models.CharField(max_length=30, blank=False, null=True)
+    sName=models.CharField(max_length=20, blank=False, null=True)
+    sNickName = models.CharField(max_length=50, blank=False, null=True)
     sPhone=models.CharField(max_length=20, blank=False, null=True, unique=True)
+    sAddress=models.CharField(max_length=50, blank=False, null=True)
     sPictureUrl=models.URLField(max_length=200, blank=False, null=True)
 
     class Meta:

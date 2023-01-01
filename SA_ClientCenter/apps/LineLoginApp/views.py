@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt #資安
 import requests
 
 from SA_ClientCenter import settings
@@ -28,7 +28,7 @@ def session_Update(request):
         session_Update(request)
 
 def session_clear(request):
-     request.session.clear()
+    request.session.clear()
 
 def logout(request):
     session_clear(request)
@@ -77,16 +77,19 @@ def callback(request):
                     UserData.objects.create(sLineID=userId, sName=displayName, sPictureUrl=pictureUrl)
                 except:
                     return HttpResponse("寫入資料庫發生問題")
-                SA_CC_ID = UserData.objects.get(sLineID=userId)
+                SA_CC_ID = UserData.objects.get(sLineID=userId, flat = True)
                 session_Update(request)
                 return HttpResponseRedirect('yourNew')
                 # HttpResponseRedirect('') #這裡是第一次註冊的人，網址接到填寫資料頁面
         else:
             return HttpResponse("抓取個人資料發生錯誤")
 
-        SA_CC_ID = UserData.objects.get(sLineID=userId)
-        session_Update(request)
-        return HttpResponseRedirect('/LineLoginApp/in')
+        SA_CC_ID_data = UserData.objects.filter(sLineID=userId)
+        SA_CC_ID =""
+        for i in SA_CC_ID_data:
+            SA_CC_ID = i.sUserID
+        return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
+        
 
 """
 def Verify_ID_token(id_token): #太詳細不需要，都是驗證用資料
