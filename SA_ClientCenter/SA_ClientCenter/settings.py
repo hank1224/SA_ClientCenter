@@ -30,6 +30,10 @@ CALLBACK_URL = "https://7548-1-34-54-152.jp.ngrok.io" + "/LineLoginApp/callback"
 LINE_CHANNEL_ID = "1657781063"
 LINE_CHANNEL_SECRET ="f37837763b09b05df0b39e317614f7f2"
 
+# https://www.twsms.com/
+SMS_ACCOUNT = "hank20011224"
+SMS_PASSWORD = "a99837722"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "LineLoginApp",
+    "SMSloginApp",
 ]
 
 MIDDLEWARE = [

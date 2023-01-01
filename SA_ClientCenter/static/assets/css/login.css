@@ -1,0 +1,149 @@
+html{
+    overflow-x: hidden;
+}
+body{
+    overflow: hidden;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+.top{
+    height: 6%;
+    width: 100%;
+    margin: 0;
+    padding: 6%;
+    background-color: #4f4f4f;
+    vertical-align:middle;
+    margin-bottom: 50px;
+}
+.title_text{
+    font-size:x-large;
+    margin: 0;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    
+}
+
+.welcome_text{
+    font-size: xx-large;
+}
+
+.welcome{
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 ;
+    padding: 5px;
+    margin-top: 5%;
+    text-align: center;
+}
+
+.input_frame{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 ;
+    padding: 5px;
+    margin-top: 5%;
+}
+.input_frame .inputa{
+    justify-content:center;
+    align-items:center;
+    padding: 3px;
+    padding-left: 6px;
+    margin: 0 ;
+    height: 40px;
+    width: 90%;
+    border-radius: 100px;
+}
+
+.LINE{
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+    background-color: #00c300;
+    border-radius: 10px;
+    width: 60%;
+    text-align: center;
+    font-size: larger;
+}
+.signup{
+
+    justify-content:center;
+    align-items:center;
+    width: 90%;
+
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+    background-color: #4f4f4f;
+    border-radius: 10px;
+    text-align: center;
+    font-size: larger;
+    margin: 0 15%;
+    
+}
+.signup_right{
+    margin-left: -5% ;
+}
+.signup_frame{
+    width: 30%;
+}
+.msg{
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+    background-color: #4f4f4f;
+    border-radius: 10px;
+    width: 60%;
+    text-align: center;
+    font-size: larger;
+}
+
+
+
+@media screen and (max-width: 768px)
+{
+    .ta1{
+        margin-bottom: 3%;
+    }
+    .td1{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0%;
+        width: 80%;
+        border: #c7fffc 2px solid;
+        background-color: #2fcfc6;
+        color: azure;
+    }
+    .btn{
+        justify-content: center;
+        margin: 5% auto;
+
+    }
+    .text1{
+        margin: 0% auto;
+        background-color: #e8fefd;
+        color:#2fcfc6;
+        height: auto;
+    }
+    .text2{
+        margin-left: 2%;
+        width: 15vh;
+        height: 10vh;
+        font-size: 25px;
+    }
+    
+    .text3{
+        width: 15vh;
+        font-size: 20px;
+    }
+    .ta3{
+        font-size: 30px;
+    }
+    
+
+}

@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from SMSloginApp import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('LineLoginApp/', include("LineLoginApp.urls")),
-    path('SMSloginApp/', include("SMSloginApp.urls")),
+    path('index.html', views.check_phoneNUM),
 ]

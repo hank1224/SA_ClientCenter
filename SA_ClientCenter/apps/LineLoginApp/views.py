@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import requests
-from uuid import uuid1 #待測試
 
 from SA_ClientCenter import settings
 from LineLoginApp.models import UserData
@@ -72,7 +71,6 @@ def callback(request):
                 displayName = profileJSON.get('displayName')
                 statusMessage = profileJSON.get('statusMessage')
                 pictureUrl = profileJSON.get('pictureUrl') #網址後接上 /large /small 可得不同大小的圖
-                # produce_UUID = uuid1()
                 if pictureUrl =="":
                     pictureUrl = None
                 try:
@@ -111,4 +109,3 @@ def Get_user_profile(access_token): #取得使用者資料
     response = requests.get(url, headers=headers)
     return response.status_code,response.json()
 
-# https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657781063&redirect_uri=https://4776-2001-b400-e332-e89a-1cf9-dc13-67df-dda6.jp.ngrok.io/LineLoginApp/callback&state=rayIs9ay&scope=profile%20openid%20email&promot=consent&ui_locales=zh-TW
