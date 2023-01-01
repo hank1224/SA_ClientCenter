@@ -10,9 +10,11 @@ from SA_ClientCenter import settings
 from LineLoginApp.models import UserData
 
 callbackurl = settings.CALLBACK_URL
+channel_id = settings.LINE_CHANNEL_ID
 
 def index_page(request):
     reurl = callbackurl
+    CHANNEL_ID = channel_id
     return render(request, 'index.html', locals())
 
 def in_page(request):
@@ -79,7 +81,7 @@ def callback(request):
                     return HttpResponse("寫入資料庫發生問題")
                 SA_CC_ID = UserData.objects.get(sLineID=userId)
                 session_Update(request)
-                HttpResponseRedirect('yourNew')
+                return HttpResponseRedirect('yourNew')
                 # HttpResponseRedirect('') #這裡是第一次註冊的人，網址接到填寫資料頁面
         else:
             return HttpResponse("抓取個人資料發生錯誤")
