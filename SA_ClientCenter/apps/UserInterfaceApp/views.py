@@ -13,6 +13,9 @@ def login_noAccount_page(request):
 def login_Account_page(request):
     return render(request, 'login_Account.html')
 
+def alert_accessNO_page(request):
+    return render(request, 'alert_accessNO.html')
+
 def inside_page(request):
     if login_check(request) == True:
         return render(request, 'inside.html', locals())

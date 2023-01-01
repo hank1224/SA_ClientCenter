@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "LineLoginApp",
     "SMSloginApp",
-    "UserInterfaceApp"
+    "UserInterfaceApp",
+    "DBmanageApp"
 ]
 
 MIDDLEWARE = [

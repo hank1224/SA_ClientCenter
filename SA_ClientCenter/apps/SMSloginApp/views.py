@@ -7,7 +7,7 @@ import urllib.parse
 import urllib.request
 import random
 
-from LineLoginApp.models import UserData
+from DBmanageApp.models import UserData
 
 def send_SMS(request):
     code=str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))

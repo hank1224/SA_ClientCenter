@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt #資安
 import requests
 
 from SA_ClientCenter import settings
-from LineLoginApp.models import UserData
+from DBmanageApp.models import UserData
 
 callbackurl = settings.CALLBACK_URL
 channel_id = settings.LINE_CHANNEL_ID
@@ -14,6 +14,7 @@ channel_id = settings.LINE_CHANNEL_ID
 def index_page(request):
     reurl = callbackurl
     CHANNEL_ID = channel_id
+    alert = request.GET.get('access')
     return render(request, 'index.html', locals())
 
 def in_page(request):
@@ -55,34 +56,35 @@ def callback(request):
         response = requests.post(url, headers=headers, data=data)
 
         access_token = response.json().get('access_token')
+
+        #拒絕受予權限的話
+        if access_token == None:
+            return HttpResponseRedirect('/UserInterfaceApp/alert_accessNO.html')
         # id_token = response.json().get('id_token')
         # refresh_token = response.json().get('refresh_token')
 
         getProfileStatus_code, profileJSON = Get_user_profile(access_token)
         # r = Verify_ID_token(id_token)
 
-        if getProfileStatus_code == 200: 
+        if getProfileStatus_code != 200: 
+            return HttpResponse("抓取個人資料發生錯誤")
+        else:
             userId = profileJSON.get('userId')
             try:
                 UserData.objects.get(sLineID=userId)
             except MultipleObjectsReturned:
                 return HttpResponse("MultipleObjectsReturned錯誤，請洽客服")
             except ObjectDoesNotExist:
+                #這裡是第一次註冊的人
                 displayName = profileJSON.get('displayName')
                 statusMessage = profileJSON.get('statusMessage')
                 pictureUrl = profileJSON.get('pictureUrl') #網址後接上 /large /small 可得不同大小的圖
                 if pictureUrl =="":
                     pictureUrl = None
                 try:
-                    UserData.objects.create(sLineID=userId, sName=displayName, sPictureUrl=pictureUrl)
+                    UserData.objects.create(sLineID=userId, sNickName=displayName, sPictureUrl=pictureUrl)
                 except:
                     return HttpResponse("寫入資料庫發生問題")
-                SA_CC_ID = UserData.objects.get(sLineID=userId, flat = True)
-                session_Update(request)
-                return HttpResponseRedirect('yourNew')
-                # HttpResponseRedirect('') #這裡是第一次註冊的人，網址接到填寫資料頁面
-        else:
-            return HttpResponse("抓取個人資料發生錯誤")
 
         SA_CC_ID_data = UserData.objects.filter(sLineID=userId)
         SA_CC_ID =""
