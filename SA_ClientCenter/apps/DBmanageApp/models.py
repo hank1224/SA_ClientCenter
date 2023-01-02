@@ -9,16 +9,18 @@ class UserData(models.Model):
     sName=models.CharField(max_length=20, blank=False, null=True)
     sNickName = models.CharField(max_length=50, blank=False, null=True)
     sPhone=models.CharField(max_length=20, blank=False, null=True, unique=True)
+    sPhoneAuth=models.BooleanField(default=False, null=False)
     sAddress=models.CharField(max_length=50, blank=False, null=True)
+    sEmail=models.EmailField(max_length=50, blank=False, null=True)
     sPictureUrl=models.URLField(max_length=200, blank=False, null=True)
 
     class Meta:
         verbose_name = u"客戶個人資料"
         verbose_name_plural = verbose_name
     
-    def __str__(self):
-        return self.sUserID
-    # 讓object預設回傳
+    # def __str__(self):
+    #     return self.sUserID
+    # # 讓object預設回傳
 
 
 # Create your models here.

@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from UserInterfaceApp import views
+from DBmanageApp import views
 
 urlpatterns = [
-    path('login_noAccount.html', views.login_noAccount_page),
+    path('submitUserData', views.submitUserData),
 ]

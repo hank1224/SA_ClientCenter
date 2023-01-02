@@ -12,26 +12,27 @@
     <div class="top">
         <p class="title_text">註冊</p>
     </div>
-    <form action="">
+    <form action="/DBmanageApp/submitUserData" method='POST'>
         <div class="input_frame">
-            <input class="inputa" type="text" name="realname" placeholder="請輸入真實姓名" value="">
+            <input class="inputa" type="text" name="name" required placeholder="請輸入真實姓名" value="{{ name }}">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="">
+                <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="{{ nickname }}">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="phone" placeholder="請輸入手機電話" value="">
+                <input class="inputa" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="email" placeholder="請輸入email" value="">
+            <input class="inputa" type="text" name="address" required placeholder="請輸入聯絡地址" value="{{ address }}">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="address" placeholder="請輸入聯絡地址" value="">
+                <input class="inputa" type="text" name="email" placeholder="請輸入email" value="{{ email }}">
         </div>
+
 
         <div class="input_frame">
             <div class="signup_frame">
-                <input type="submit" class="signup signup_right" value="更新">
+                <input type="submit" class="signup signup_right" value="送出">
                 <a href="logout"><input type="button" class="signup signup_right" value="登出"></a>
             </div>
         </div>

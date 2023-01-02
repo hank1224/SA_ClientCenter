@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt #資安
-from django .contrib.auth.decorators import login_required
+from DBmanageApp.models import UserData
 
 
 def login_noAccount_page(request):
@@ -18,6 +18,13 @@ def alert_accessNO_page(request):
 
 def inside_page(request):
     if login_check(request) == True:
+        UserData_queryset = UserData.objects.filter(sUserID=request.session['UserID'])
+        for queryset in UserData_queryset:
+            name = "" if queryset.sName == None else queryset.sName
+            nickname = "" if queryset.sNickName == None else queryset.sNickName
+            phone = "" if queryset.sPhone == None else queryset.sPhone
+            address = "" if queryset.sAddress == None else queryset.sAddress
+            email = "" if queryset.sEmail == None else queryset.sEmail
         return render(request, 'inside.html', locals())
     else:
         return login_check(request)
