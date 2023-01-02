@@ -8,7 +8,7 @@ class UserData(models.Model):
     # sPassword=models.CharField(max_length=20, blank=False, null=True)
     sName=models.CharField(max_length=20, blank=False, null=True)
     sNickName = models.CharField(max_length=50, blank=False, null=True)
-    sPhone=models.CharField(max_length=20, blank=False, null=True, unique=True)
+    sPhone=models.CharField(max_length=20, blank=False, null=True)
     sPhoneAuth=models.BooleanField(default=False, null=False)
     sAddress=models.CharField(max_length=50, blank=False, null=True)
     sEmail=models.EmailField(max_length=50, blank=False, null=True)

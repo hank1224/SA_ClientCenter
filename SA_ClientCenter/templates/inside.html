@@ -26,7 +26,8 @@
                 <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="{{ nickname }}">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}">
+                <input class="inputa" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}" {% if phoneauth == True %}readonly{% endif %}>
+                {% if phoneauth == True %}(已驗證){% endif %}
         </div>
         <div class="input_frame">
             <input class="inputa" type="text" name="address" required placeholder="請輸入聯絡地址" value="{{ address }}">

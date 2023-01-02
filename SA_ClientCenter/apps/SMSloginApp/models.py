@@ -5,7 +5,6 @@ class SMSrecord(models.Model):
     SPhone=models.CharField(max_length=10, blank=False)
     STime=models.DateTimeField(auto_now=False, auto_now_add=True)
     SCode=models.CharField(max_length=4, blank=False, null=True)
-    SVerified=models.BooleanField(default=False,null=False)
     
     class Meta:
         verbose_name = u"簡訊認證紀錄"

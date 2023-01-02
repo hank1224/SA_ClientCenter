@@ -23,9 +23,9 @@ def SMS_sentCode_page(request):
         if len(Tphone) != 10 or Tphone.startswith('09') != True:
             vaildPhone = False
             return render(request, 'SMS_auth.html', locals())
-        if check_phoneNUM(Tphone) != True:
-            registed = True
-            return render(request, 'SMS_auth.html', locals())
+        # if check_phoneNUM(Tphone) != True:
+        #     registed = True
+        #     return render(request, 'SMS_auth.html', locals())
 
         make_uuid = send_SMS(Tphone)
         return render(request, 'SMS_sentCode.html', locals())
@@ -79,17 +79,17 @@ def SMS_CheckCode(request):
             return render(request, 'SMS_auth.html', locals()) #驗證失敗
         else:
             try: #檢查是否新來的
-                UserData.objects.get(sPhone=phone)
+                UserData.objects.get(sPhone=phone, sPhoneAuth=True)
             except MultipleObjectsReturned:
                 return HttpResponse("MultipleObjectsReturned錯誤，請洽客服")
             except ObjectDoesNotExist:
                 #這裡是第一次註冊的人
                 try:
-                    UserData.objects.create(sPhone=phone)
+                    UserData.objects.create(sPhone=phone, sPhoneAuth=True)
                 except:
                     return HttpResponse("寫入資料庫發生問題")
 
-        SA_CC_ID_data = UserData.objects.filter(sPhone=phone)
+        SA_CC_ID_data = UserData.objects.filter(sPhone=phone, sPhoneAuth=True)
         SA_CC_ID =""
         for i in SA_CC_ID_data:
             SA_CC_ID = i.sUserID

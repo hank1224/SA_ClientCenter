@@ -16,6 +16,9 @@ def GDPR_page(request):
 def alert_saved_page(request):
     return render(request, 'alert_saved.html')
 
+def alert_NOTuniquePhone_page(request):
+    return render(request, 'alert_NOTuniquePhone.html')
+
 def login_Account_page(request):
     return render(request, 'login_Account.html')
 
@@ -37,14 +40,20 @@ def inside_page(request):
         return login_check(request)
 
 def logout(request):
-    del request.session['UserID']
+    try:
+        del request.session['UserID']
+    except:
+        pass
     return HttpResponseRedirect('login_noAccount.html')
 
 @csrf_exempt
 def Login_and_AddSession(request):
     SA_CC_ID = request.GET.get('SA_CC_ID')
     if 'UserID' in request.session:
-        del request.session['UserID']
+        try:
+            del request.session['UserID']
+        except:
+            pass
     request.session['UserID'] = SA_CC_ID
     request.session.modified = True
     request.session.set_expiry(60*20) #存在20分鐘
