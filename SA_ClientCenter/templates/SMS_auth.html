@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href=" {% static 'assets/css/login.css' %} ">
+</head>
+<body>
+    <div class="top">
+        <p class="title_text">簡訊認證</p>
+    </div>
+    <form action="">
+        <div class="input_frame">
+
+
+                <form action="" method="post">
+                    <input class="inputb" type="text" name="Tphone" placeholder="請輸入手機號碼" value="">
+                    <input type="submit" class="mesbtn" value="取得驗證碼">
+                </form>
+
+
+        </div>
+        <div class="input_frame">
+                <input class="inputa" type="text" name="SMS_cocde" placeholder="請輸入驗證碼" value="">
+        </div>
+        <div class="input_frame">
+            <div class="signup_frame">
+                <input type="button" class="signup signup_right" value="返回" onclick="history.back()">
+            </div>
+            <div class="signup_frame">
+                <input type="submit" class="signup" value="送出">
+            </div>
+        </div>
+        
+    </form>
+</body>
+</html>

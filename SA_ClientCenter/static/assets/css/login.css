@@ -55,7 +55,25 @@ body{
     width: 90%;
     border-radius: 100px;
 }
-
+.mesbtn{
+    width: 26%;
+    padding: 3px;
+    text-align: center;
+    font-size: smaller;
+    background-color: #4f4f4f;
+    color: white;
+    margin-left: 4%;
+}
+.input_frame .inputb{
+    justify-content:center;
+    align-items:center;
+    padding: 3px;
+    padding-left: 6px;
+    margin: 0 ;
+    height: 40px;
+    width: 60%;
+    border-radius: 100px;
+}
 .LINE{
     padding: 10px;
     color: white;
@@ -104,46 +122,3 @@ body{
 
 
 
-@media screen and (max-width: 768px)
-{
-    .ta1{
-        margin-bottom: 3%;
-    }
-    .td1{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 0%;
-        width: 80%;
-        border: #c7fffc 2px solid;
-        background-color: #2fcfc6;
-        color: azure;
-    }
-    .btn{
-        justify-content: center;
-        margin: 5% auto;
-
-    }
-    .text1{
-        margin: 0% auto;
-        background-color: #e8fefd;
-        color:#2fcfc6;
-        height: auto;
-    }
-    .text2{
-        margin-left: 2%;
-        width: 15vh;
-        height: 10vh;
-        font-size: 25px;
-    }
-    
-    .text3{
-        width: 15vh;
-        font-size: 20px;
-    }
-    .ta3{
-        font-size: 30px;
-    }
-    
-
-}

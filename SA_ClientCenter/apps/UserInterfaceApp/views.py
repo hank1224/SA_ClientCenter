@@ -31,6 +31,7 @@ def inside_page(request):
             phone = "" if queryset.sPhone == None else queryset.sPhone
             address = "" if queryset.sAddress == None else queryset.sAddress
             email = "" if queryset.sEmail == None else queryset.sEmail
+            phoneauth = queryset.sPhoneAuth
         return render(request, 'inside.html', locals())
     else:
         return login_check(request)
