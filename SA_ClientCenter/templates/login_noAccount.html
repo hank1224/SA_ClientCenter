@@ -10,11 +10,12 @@
 </head>
 <body>
     <div class="top">
-        <p class="title_text">登入</p>
+        <p class="title_text">登入/註冊</p>
     </div>        
     <div class="welcome">
-        <p class="welcome_text">歡迎來到 SA_ClientCenter </p>
-        <p>請選擇下列其中一種方式進行實名制</p>
+        <p class="welcome_text">歡迎來到 SA_個資中心</p>
+        <p>請選擇下列方式進行實名登入</p>
+        <p>當您按下驗證即代表同意<a href="GDPR.html">個資使用條款</a></p>
     </div>
     <div class="input_frame">
         <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={{ CHANNEL_ID }}&redirect_uri={{ reurl }}&state=rayIs9ay&scope=profile%20openid%20email&promot=consent&ui_locales=zh-TW" class="LINE"> LINE驗證 </a>

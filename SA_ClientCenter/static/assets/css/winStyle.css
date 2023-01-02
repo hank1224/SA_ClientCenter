@@ -1,0 +1,73 @@
+﻿ @charset "utf-8";
+
+body {
+    margin: 0;
+    font-family: Arial, "微軟正黑體", "新細明體";
+    background-attachment: fixed;
+    padding: 0;
+    background-color: #efefef;
+}
+
+h2.winTitle {
+    padding: 10px;
+}
+
+.mainWin {
+    background-color: #fff;
+    width: 90%;
+    margin: 0px auto;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.webExplainBox {
+    background-color: #fff;
+    width: 95%;
+    margin: 10px auto;
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
+    .webExplainBox h4 {
+        font-weight: 600;
+        color: #146FDC;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 15px;
+    }
+
+    .webExplainBox p {
+        margin: 0px;
+        margin-top: 10px;
+    }
+
+    .webExplainBox .imgbox {
+        background-color: #fff;
+        margin: 5px;
+        border: solid 1px #ccc;
+        padding: 5px;
+        display: inline-block;
+        text-align: center;
+        position: relative;
+        vertical-align: top;
+    }
+
+    .webExplainBox img {
+        max-width: 700px;
+    }
+
+    .webExplainBox .imgbox small {
+        background-color: #333;
+        display: block;
+        color: #fff;
+        padding: 5px 15px;
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+
+
+@media only screen and (max-width: 768px) {
+    .webExplainBox img {
+        max-width: 100%;
+    }
+}

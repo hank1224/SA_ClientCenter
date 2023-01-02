@@ -3,7 +3,7 @@ from django.contrib import admin
 from DBmanageApp.models import UserData
 
 class UserDataMain(admin.ModelAdmin):
-    list_display=('sUserID','sLineID','sName','sPhone','sNickName','sAddress','sPictureUrl')
+    list_display=('sUserID','sLineID','sName','sPhone','sNickName','sAddress','sEmail','sPictureUrl')
     search_fields=('sName',)
 
 

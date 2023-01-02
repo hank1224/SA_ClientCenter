@@ -17,5 +17,5 @@ def submitUserData(request):
     
     UserData.objects.filter(sUserID=request.session['UserID']).update(sName=Name, sNickName=NickName, sPhone=Phone, \
         sAddress=Address, sEmail=Email)
-    return HttpResponseRedirect('/UserInterfaceApp/inside.html')
+    return HttpResponseRedirect('/UserInterfaceApp/alert_saved.html')
 # Create your views here.

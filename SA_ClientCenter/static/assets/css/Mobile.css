@@ -1,0 +1,169 @@
+.header{ height:40px;min-width: auto;} 
+.header h1{}
+a.titleLogo{height: 40px;}
+.titleLogo img{height:40px;vertical-align: top;margin-top: 0px;}
+.phone_menu , .phone_menu_close{
+	display: block;
+	background-color: transparent;
+	font-size: 1.2em;
+	padding: 0px 10px;
+	margin: 0px;
+	float: right;
+	border-style: none;
+	line-height: 40px;
+}
+.phone_menu:focus{
+	border: 1px solid #333;
+}
+.phone_menu_close{
+	background-color: #F76C6E;
+	color: #FFF;
+	position: fixed;
+	right: 0px;z-index: 999;
+}
+ 
+.topArea{margin-top: 7px;}
+.topArea a{padding:0px;margin: 0px 5px;}
+.topArea a i{margin-top: 3px; font-size: 1em;}
+.topArea a span{display: none;}
+.topArea a.serviceononlineBox {color: #2da88f;background-color: #fff;}
+.topArea a.messageBox{color: #2399EF;background-color: #fff;}
+.topArea a.calendarBox{color: #F5B221;background-color: #fff;}
+
+.topArea .memberInfo{display: none;} 
+
+.fontchange{}
+.fontchange a.fontTitle{font-size: 0.8em;border: solid 1px #ccc;padding: 3px ;border-radius: 3px;display: block;}
+.fontchange .fontclose{background-color: #333;color: #fff;font-weight: 600;text-align: center;padding: 3px ;position: absolute;top: 0px;left: 0px;width: 100%;cursor: pointer;}
+.fontchange ul{background-color: #fff;position: absolute;left: 0px;width: 100%;border: solid 1px #ccc;display: none;}
+.fontchange ul li{display:block;margin: 1px 0px;}
+ 
+.fontchange a.txtchange{ 
+	background-color: #fff;
+	font-weight: 600;
+	line-height: 20px;
+	color: #333;
+	margin: 0px;
+	width: 100%;
+	padding:5px; 
+	border-radius: 0px;
+}
+.fontchange a.txtchange.sel{color: #fff;}
+
+.CAP_memuBar{
+	display: none;
+	background-color: rgba(0,0,0,0.9);
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	overflow: auto;z-index: 8010;
+	margin-top: 0px;
+}
+.CAP_memuBar ul{
+	width: 100%;
+	margin-left: 0px;
+	margin-top:35px;
+	float: none;
+}
+.CAP_memuBar li{
+	color: #fff;
+	display: block;
+	border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+.CAP_memuBar .CAP_menu_title{
+	padding-left: 20px;
+	color: #fff; 
+}
+.CAP_memuBar .CAP_menu_title i{ margin:0px 10px;}
+.CAP_memuBar .CAP_menu_title:hover , .CAP_memuBar .CAP_menu_title:focus{
+	color: #F60;
+}
+.CAP_memuBar .CAP_menu_sub{
+	padding-left:30px;
+	position:relative;
+	border: 1px solid #000;
+}
+.CAP_memuBar .CAP_menu_sub a , .CAP_memuBar .CAP_menu_sub a:visited{
+	word-break: break-all;
+	line-height: 40px;
+	color: #333;
+	border-style:none;
+}
+.CAP_memuBar .CAP_menu_sub a:hover , .CAP_memuBar .CAP_menu_sub a:focus{
+	border-bottom: 1px solid #0CF;
+}
+.CAP_topmenu{
+	font-size: 1.2em;
+	padding: 0px;
+	float: none;
+	padding:10px;
+}
+.CAP_topmenu a:link , .CAP_topmenu  a:visited{
+	display: block;
+	color:#0FF;
+	border-bottom: 1px solid #0FF;
+}
+.CAP_topmenu a > i{ margin:0px 10px;}
+
+.CAP_memuBar .CAP_menu_title , .CAP_topmenu{ line-height:60px;} 
+
+.CAP_body{ padding-top:40px;}
+
+.footer .footer_memuBar{display: none;}
+.footer .foot_copyright{width: 90%;margin: 0px auto;}
+.foot_copyright .mailArea{padding-left: 0px;text-align: center;} 
+.footer .footer_logo{margin:0px;float: auto;display: block;width: 100%;text-align: center;padding-bottom: 10px;}
+ #goTop{
+	height: 40px;
+	width: 40px;
+	margin-top: -20px;
+	margin-right:0px;
+	 line-height: 40px;
+}
+
+
+.Table_List{}
+.Table_List th{display: block;text-align: left;border-style:none;padding: 5px;padding-top: 10px;width: auto;}
+.Table_List td{display: block;padding: 5px;}
+
+
+.searchBOX{display:none;float: auto; width: 100%;}
+.but_seach_mobile{border-radius: 50%;background-color: #333;display: inline-block;color: #fff;font-size: 0.5em;padding:5px;text-align:center;width: 36px;height: 36px;line-height: 25px;box-sizing: border-box;}
+.but_seach_mobile .disnone{display: none;}
+.searchBOX_con{
+	width: 100%;
+	float: auto;
+}
+.searchBOX_con .txtresult{line-height: normal;}
+.searchBOX_con h4 span{line-height: normal;}
+
+.searchBOX_sys table.search_list th{text-align: left; border-bottom-style:none;display: block;}
+.searchBOX_sys table.search_list td{border-bottom-style:none;display: block;}
+
+.megBOX h4.Event small{float:none;display: block;background-color: transparent;border-bottom: dashed 1px #333;margin-bottom: 5px;}
+.megBOX ul.time li{display: block;width: 100%;}
+
+
+.area_Left{
+	float: auto;
+	width: 100%;
+}
+.area_Right{ 
+	float: auto;
+	width: 100%;
+}
+.mobile_floatauto{float: none;}
+.mobile_hide{display: none;}
+.mobile_show{display: inline-block;}
+h2.title{ 
+	font-size: 2em;
+	letter-spacing: 1px;
+}
+
+ 
+ul.tab_peoplelive li a{padding: 5px 10px;margin: 0px;} 
+
+
+ 

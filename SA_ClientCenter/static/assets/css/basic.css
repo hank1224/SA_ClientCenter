@@ -1,0 +1,270 @@
+﻿@charset "utf-8";
+a:link, a:visited {
+    text-decoration: none; 
+    color: #1043ab;
+}
+a:hover, a:active, a:focus {
+	text-decoration: none;
+}
+img{
+	vertical-align: middle;
+}
+a img {
+	border: none;
+	vertical-align: middle;
+}
+ul, ol, dl { 
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+table{
+	border-collapse: separate;
+   border-spacing: 0px;
+} 
+table th , table td{padding: 3px;}
+ input[type="text"] ,   input[type="password"] {
+	border: 1px solid #d3d3d3; 
+}
+select{border: 1px solid #d3d3d3;padding: 4px; }
+ input[type="button"],   input[type="sumit"] ,  button {
+	 cursor:pointer;
+}
+ 
+
+/* 排列樣式 */
+.goCenter {
+	margin-right: auto;
+	margin-left: auto;
+	clear: both;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.goRight {
+	float: right;
+	margin-left: 8px;
+}
+.goLeft {
+	float: left;
+	margin-right: 8px;
+}
+.heightSpace {
+	display: block;
+	height: 10px;
+}
+.inCenter{
+	text-align: center;
+}
+.inLeft{
+	text-align: left;
+}
+.inRight{
+	text-align: right;
+}
+/* 排列樣式 --------------------到此*/
+
+/* 字型樣式 */
+.txt11 {
+	font-size: 0.5em;
+	line-height: 15px;
+	font-family: Arial , "新細明體", "細明體" ;
+	font-weight: 100;
+}
+.txt12 {
+	font-size: 0.6em;
+	line-height: 18px;
+	font-family:  Arial , "新細明體", "細明體";
+	font-weight: 100;
+}
+.txt13 {
+	font-size: 0.8em;
+	line-height: 23px;
+	font-family:   Arial , "新細明體", "細明體";
+	font-weight: 100;
+}
+.txt13B {
+	font-size: 0.8em;
+	line-height: 20px;
+	font-weight: bold;
+}
+.txt15 {
+	font-size: 1em;
+	line-height: 25px;
+	font-family: Arial , "微軟正黑體", "新細明體" ; 
+}
+.txt15B {
+	font-size: 1em;
+	line-height: 25px;
+	font-weight: bold;
+	font-family: Arial , "微軟正黑體", "新細明體";
+}
+.txt18 {
+	font-size: 1.2em;
+	line-height: 30px;
+	font-family: Arial , "微軟正黑體", "新細明體";
+}
+.txt18B {
+	font-size: 1.2em;
+	line-height: 30px;
+	font-weight: bold;
+	font-family: Arial, "微軟正黑體", "新細明體";
+}
+.txt24 {
+	font-size:1.6em;
+	line-height: 35px;
+}
+.txt24B {
+	font-size: 1.6em;
+	line-height: 30px;
+	font-weight: bold;
+} 
+.txtArial{font-family: Arial, "微軟正黑體", "新細明體";}
+.txt09em {
+	font-size: 0.9em;
+	line-height: 1em;
+}
+.txt10em {
+	font-size: 1em;
+	line-height: 1.2em;
+}
+.txt12em {
+	font-size: 1.2em;
+	line-height: 1.2em;
+}
+.txt15em {
+	font-size: 1.5em;
+	line-height: 1.8em;
+}
+.txt20em {
+	font-size: 2em;
+	line-height: 2em;
+}
+.txtbold{font-weight: bold;}
+ 
+/* 字型樣式 --------------------到此*/
+/* 顏色樣式 --*/
+.colorR{
+	color: #ab0b0b;
+}
+.colorB{
+	color: #0d638d;
+}
+.colorG{
+	color: #0b6b60;
+}
+.colorGray70{
+	color: #333333;
+}
+.colorGray50{
+	color: #999999;
+} 
+.colorRed , a.colorRed{color: #ab0b0b;}
+.colorBule , a.colorBule{color: #0d638d;}
+.colorOrange , a.colorOrange{color: #9b3e00;} 
+.colorYellow , a.colorYellow{color: #f7e901;} 
+.colorPurple , a.colorPurple{color: #b962de;} 
+.colorPink , a.colorPink{color: #fa6aa4;} 
+.colorCoffee , a.colorCoffee{color: #482c12;}
+.colorLatte , a.colorLatte{color: #a88e75;}
+.colorGreen , a.colorGreen{color: #107661;}
+.colorGray70 , a.colorGray70{color: #333333;}
+.colorGray50 , a.colorGray50{color: #999999;}
+.colorWhite , a.colorWhite{color: #fff;}
+
+.colorbg_gray10{background-color: #efefef;}
+/* 顏色樣式 --------------------到此*/
+
+/* 線條樣式 -------------------*/
+.TOPdashline{
+	border-top: dashed 1px #d5dde4; 
+	padding-top: 5px;
+}
+.BOTTOMdashline{
+	padding-bottom: 5px;
+	border-bottom: dashed 1px #d5dde4; 
+}
+.TOPsolidline{
+	border-top: solid 1px #d5dde4; 
+	padding-top: 5px;
+}
+.BOTTOMsolidline{
+	padding-bottom: 5px;
+	border-bottom: solid 1px #d5dde4; 
+}
+.solidlineRed{border: solid 1px #FC6163;padding: 3px;}
+/* 線條樣式 --------------------到此*/
+
+.linebreak{word-break:break-all;}
+.overflow{
+	overflow: auto;
+}
+.clearfloat {
+	clear: both;
+}
+
+/* 必填*/
+.mustfield{
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius  : 2px;
+	color: #FFF;
+	font-family: "新細明體", "細明體", Arial;
+	font-size: 0.6em;
+	background-color: #e85858;
+	padding: 3px;
+	vertical-align: middle;
+	line-height: 20px;
+	}
+
+/* 格線樣式 -------------------*/
+.conBOX{
+	padding: 3px;
+	display: table-cell;
+	margin: 3px;
+	vertical-align: top;
+}
+.con3BOX{
+	float: left;
+	width: 30%;
+	padding: 3px;
+	margin-top: 3px;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+}
+.con4BOX{
+	float: left;
+	width: 22%;
+	padding: 3px;
+	margin-top: 3px;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	margin-left: 3px;
+}
+.padding10{ padding:10px;}
+.padding05{ padding:5px;}
+.padding20{ padding:20px;}
+.PL20{padding-left: 20px;}
+/* 格線樣式 --------------------到此*/
+
+.mainUL{
+	list-style: circle outside;
+	font-weight: bold;
+	margin-left: 30px;
+}
+.mainUL li{
+	font-weight: normal;word-break: break-all;
+}
+ul.dataUL_list{list-style: none;}
+ul.dataUL_list li{padding:5px;}
+ul.dataUL_list li span{margin-right: 10px;}
+
+
+@media only screen and (max-width: 768px){
+	.mainUL{margin-left: 5px;}
+	ul.dataUL_list li span{display: block;}
+}
+
+.mobile_show{display: none;}
+
+ 

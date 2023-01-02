@@ -10,6 +10,12 @@ def login_noAccount_page(request):
     CHANNEL_ID = settings.LINE_CHANNEL_ID
     return render(request, 'login_noAccount.html', locals())
 
+def GDPR_page(request):
+    return render(request, 'GDPR.html')
+
+def alert_saved_page(request):
+    return render(request, 'alert_saved.html')
+
 def login_Account_page(request):
     return render(request, 'login_Account.html')
 

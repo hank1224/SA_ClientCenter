@@ -24,4 +24,6 @@ urlpatterns = [
     path('logout', views.logout),
     path('Login_and_AddSession', views.Login_and_AddSession),
     path('alert_accessNO.html', views.alert_accessNO_page),
+    path('GDPR.html', views.GDPR_page),
+    path('alert_saved.html', views.alert_saved_page)
 ]
