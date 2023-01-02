@@ -19,7 +19,8 @@ from SMSloginApp import views
 
 urlpatterns = [
     path('index.html', views.check_phoneNUM),
-    path('check_SMScode', views.check_SMScode),
-    path('send_SMS/<str:Tphone>/', views.send_SMS, name='send_SMS'),
+    path('send_SMS', views.send_SMS),
     path('SMS_auth.html', views.SMS_auth_page),
+    path('SMS_sentCode.html', views.SMS_sentCode_page),
+    path('SMS_CheckCode', views.SMS_CheckCode),
 ]

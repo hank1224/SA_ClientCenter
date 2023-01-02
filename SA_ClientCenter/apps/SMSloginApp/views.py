@@ -1,26 +1,42 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt #資安
 from django.conf import settings
 
 import urllib.parse
 import urllib.request
 import random
+from uuid import uuid4
 
-from SMSloginApp.forms import SMSForm
 from DBmanageApp.models import UserData
+from SMSloginApp.models import SMSrecord
+
 
 def SMS_auth_page(request):
     return render(request, 'SMS_auth.html')
 
-def send_SMS(request):
-    if request.method == 'POST':
-        phone = request.POST.get('Tphone')
+@csrf_exempt
+def SMS_sentCode_page(request):
+    if request.method == 'POST': #第一次進來
+        Tphone = request.POST.get('Tphone')
+        if len(Tphone) != 10 or Tphone.startswith('09') != True:
+            vaildPhone = False
+            return render(request, 'SMS_auth.html', locals())
+        if check_phoneNUM(Tphone) != True:
+            registed = True
+            return render(request, 'SMS_auth.html', locals())
+
+        make_uuid = send_SMS(Tphone)
+        return render(request, 'SMS_sentCode.html', locals())
+
+def send_SMS(Tphone):
         code=str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))
         username = settings.SMS_ACCOUNT
         password = settings.SMS_PASSWORD
-        mobile = '0963924024'
-        message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。"
+        mobile = Tphone
+        make_uuid = str(uuid4())
+        message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
         print("您的驗證碼："+code)
         message = urllib.parse.quote(message)
 
@@ -29,24 +45,57 @@ def send_SMS(request):
 
         # resp = urllib.request.urlopen(url)
         # print(resp.read())
-        HttpResponse(message+phone)
+        SMSrecord.objects.create(SID=make_uuid, SCode=code, SPhone=mobile)
+        return make_uuid
 
-def check_phoneNUM():
+def check_phoneNUM(Tphone):
     try:
-        UserData.objects.get_or_create(sPhone="???????????")
-        return HttpResponse("此號碼已被人註冊")
+        UserData.objects.get(sPhone=Tphone)
+        # return HttpResponse("此號碼已被人註冊")
+        return False
     except MultipleObjectsReturned:
-        return HttpResponse("此電話有多於一人註冊，請洽客服")
+        # return HttpResponse("此電話有多於一人註冊，請洽客服")
+        return False
     except ObjectDoesNotExist:
-        return HttpResponse("沒人用過")
+        # return HttpResponse("沒人用過")
+        return True
+    except:
+        # 沒抓到Tphone
+        return False
 
-def check_SMScode(request):
+
+@csrf_exempt
+def SMS_CheckCode(request):
     if request.method == 'POST':
-        form = SMSForm(request.POST)
-        if form.is_valid():
-            verification_code = form.cleaned_data['code']
-            # 送出驗證碼並驗證
-            ...
+        phone = request.POST.get('Tphone')
+        code = request.POST.get('code')
+        make_uuid = request.POST.get('make_uuid')
+        data = SMSrecord.objects.filter(SID=make_uuid)
+        dbcode=""
+        for i in data:
+            dbcode = i.SCode
+        if code != dbcode:
+            vaildCode = False
+            return render(request, 'SMS_auth.html', locals()) #驗證失敗
+        else:
+            try: #檢查是否新來的
+                UserData.objects.get(sPhone=phone)
+            except MultipleObjectsReturned:
+                return HttpResponse("MultipleObjectsReturned錯誤，請洽客服")
+            except ObjectDoesNotExist:
+                #這裡是第一次註冊的人
+                try:
+                    UserData.objects.create(sPhone=phone)
+                except:
+                    return HttpResponse("寫入資料庫發生問題")
+
+        SA_CC_ID_data = UserData.objects.filter(sPhone=phone)
+        SA_CC_ID =""
+        for i in SA_CC_ID_data:
+            SA_CC_ID = i.sUserID
+        return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
     else:
-        form = SMSForm()
-    return render(request, 'verify.html', {'form': form})
+        HttpResponse("非POST表單")
+
+
+

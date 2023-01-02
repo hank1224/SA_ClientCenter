@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
 </head>
 <body>
+    {% if saved == True %}
+    <script type="text/javascript">
+        alert("儲存成功！")
+    </script>
+    {% endif %}
+
     <div class="top">
         <p class="title_text">個人資料</p>
     </div>

@@ -9,29 +9,40 @@
     <link rel="stylesheet" href=" {% static 'assets/css/login.css' %} ">
 </head>
 <body>
+    {% if vaildPhone == False %}
+    <script type="text/javascript">
+        alert("請輸入有效的電話號碼！")
+    </script>
+    {% endif %}
+
+    {% if registed == True %}
+    <script type="text/javascript">
+        alert("此號碼已被註冊！")
+    </script>
+    {% endif %}
+
+    {% if vaildCode == False %}
+    <script type="text/javascript">
+        alert("認證失敗，請重試！")
+    </script>
+    {% endif %}
+
     <div class="top">
         <p class="title_text">簡訊認證</p>
     </div>
-    <form action="">
-        <div class="input_frame">
-
-
-                <form action="" method="post">
-                    <input class="inputb" type="text" name="Tphone" placeholder="請輸入手機號碼" value="">
-                    <input type="submit" class="mesbtn" value="取得驗證碼">
-                </form>
-
-
+    <form action="SMS_sentCode.html" method='POST'>
+        {% csrf_token %} 
+        <div class="input_frame">   
+            <input class="inputb" type="text" name="Tphone" placeholder="請輸入手機號碼" value="">
         </div>
         <div class="input_frame">
-                <input class="inputa" type="text" name="SMS_cocde" placeholder="請輸入驗證碼" value="">
         </div>
         <div class="input_frame">
             <div class="signup_frame">
-                <input type="button" class="signup signup_right" value="返回" onclick="history.back()">
+                <a href="/UserInterfaceApp/login_noAccount.html"><input type="button" class="signup signup_right" value="返回"></a>
             </div>
             <div class="signup_frame">
-                <input type="submit" class="signup" value="送出">
+                <input type="submit" class="signup" value="傳送驗證碼">
             </div>
         </div>
         
