@@ -19,7 +19,7 @@ def index_page(request):
 
 def in_page(request):
     return render(request, 'in.html')
-
+"""
 def session_Update(request):
     if not "SA_CC" in request.session:
         request.session['SA_CC'] = True
@@ -34,7 +34,7 @@ def session_clear(request):
 def logout(request):
     session_clear(request)
     return HttpResponseRedirect('/LineLoginApp/index.html')
-
+"""
 @csrf_exempt
 def callback(request):
     if request.method == 'GET':

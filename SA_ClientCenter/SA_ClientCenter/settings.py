@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-e3wt#i@&)h%!7+a*qyj$4+7f^^#=mhz9ly!-oewoqscene^$rk"
 
-CALLBACK_URL = "https://9876-1-34-54-152.jp.ngrok.io" + "/LineLoginApp/callback"
+CALLBACK_URL = "https://667f-140-135-113-240.jp.ngrok.io" + "/LineLoginApp/callback"
 
 LINE_CHANNEL_ID = "1657781063"
 LINE_CHANNEL_SECRET ="f37837763b09b05df0b39e317614f7f2"
@@ -52,8 +52,17 @@ INSTALLED_APPS = [
     "LineLoginApp",
     "SMSloginApp",
     "UserInterfaceApp",
-    "DBmanageApp"
+    "DBmanageApp",
+    "rest_framework",
+    "RESTapiApp",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

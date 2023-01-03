@@ -22,4 +22,5 @@ urlpatterns = [
     path('SMSloginApp/', include("SMSloginApp.urls")),
     path('UserInterfaceApp/', include("UserInterfaceApp.urls")),
     path('DBmanageApp/', include("DBmanageApp.urls")),
+    path('RESTapiApp/', include("RESTapiApp.urls")),
 ]
