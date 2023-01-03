@@ -39,7 +39,7 @@ def logout(request):
 def callback(request):
     if request.method == 'GET':
         Lcode = request.GET.get('code')
-        # Lstate = request.GET.get('state') #用以確定跳轉的網址是同一個，可拿來驗證 = rayIs9ay
+        Lstate = request.GET.get('state') #用以確定跳轉的網址是同一個，可拿來驗證 = rayIs9ay
 
         url = "https://api.line.me/oauth2/v2.1/token"
         headers = {
@@ -76,6 +76,11 @@ def callback(request):
                 return HttpResponse("MultipleObjectsReturned錯誤，請洽客服")
             except ObjectDoesNotExist:
                 #這裡是第一次註冊的人
+
+                if Lstate != 'rayIs9ay': #外網進來且未註冊
+                    a = "<a href='" + settings.NGROK_URL + "/UserInterfaceApp/login_noAccount.html'>前往</a>"
+                    return HttpResponse("<h1>您第一次使用SA_ClientCenter服務，請先" + a + "註冊個人資訊，才能繼續使用</h1>")
+
                 displayName = profileJSON.get('displayName')
                 statusMessage = profileJSON.get('statusMessage')
                 pictureUrl = profileJSON.get('pictureUrl') #網址後接上 /large /small 可得不同大小的圖
@@ -90,8 +95,15 @@ def callback(request):
         SA_CC_ID =""
         for i in SA_CC_ID_data:
             SA_CC_ID = i.sUserID
-        return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
-        
+
+        if Lstate != "rayIs9ay": #回傳的state判斷，來源不是此系統，是從其他地方，轉發UserID給RESTapi做返回
+            return redirect('/RESTapiApp/Linelogin?'+'SA_CC_ID='+SA_CC_ID+'&state='+Lstate)
+
+        if Lstate == "rayIs9ay": #來源為本系統，發session給他做登入
+            return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
+            
+        else:
+            return HttpResponse("判斷state發生錯誤，state= "+Lstate)
 
 """
 def Verify_ID_token(id_token): #太詳細不需要，都是驗證用資料

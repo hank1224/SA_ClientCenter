@@ -5,43 +5,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+    <title>PersonalData</title>
+    <link rel="stylesheet" href="{% static 'assets/css/login_1.css' %}">
 </head>
 <body>
+
     {% if saved == True %}
     <script type="text/javascript">
         alert("儲存成功！")
     </script>
     {% endif %}
 
-    <div class="top">
+    <div class="all">
         <p class="title_text">個人資料</p>
-    </div>
-    <form action="/DBmanageApp/submitUserData" method='POST'>
-        <div class="input_frame">
-            <input class="inputa" type="text" name="name" required placeholder="請輸入真實姓名" value="{{ name }}">
-        </div>
-        <div class="input_frame">
-                <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="{{ nickname }}">
-        </div>
-        <div class="input_frame">
-                <input class="inputa" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}" {% if phoneauth == True %}readonly{% endif %}>
-                {% if phoneauth == True %}(已驗證){% endif %}
-        </div>
-        <div class="input_frame">
-            <input class="inputa" type="text" name="address" required placeholder="請輸入聯絡地址" value="{{ address }}">
-        </div>
-        <div class="input_frame">
-                <input class="inputa" type="text" name="email" placeholder="請輸入email" value="{{ email }}">
-        </div>
+        <form action="/DBmanageApp/submitUserData" method='POST'>
+            <table>
+                <tr><td ><p class="title">姓名：</p></td></tr>
+                <tr><td>
+                    <input class="inputa" type="text" name="name" required placeholder="請輸入真實姓名" value="{{ name }}">
 
-        <div class="input_frame">
-            <div class="signup_frame">
-                <input type="submit" class="signup signup_right" value="保存">
-                <a href="logout"><input type="button" class="signup signup_right" value="登出"></a>
-            </div>
-        </div>
-    </form>
+                </td></tr>
+                    
+                <tr><td><p class="title">暱稱：</p></td></tr>
+                <tr><td >
+                    <input class="inputa" type="text" name="nickname" placeholder="請輸入暱稱" value="{{ nickname }}">
+                </td></tr>
+                <tr><td><p class="title">手機號碼：{% if phoneauth == True %} (已驗證){% endif %}</p></td></tr>
+                <tr><td>
+                    <input class="inputa check" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}" {% if phoneauth == True %} disabled="true"  {%endif %}>
+                    
+                </td></tr>
+
+                <tr><td><p class="title">住址：</p></td></tr>
+                <tr><td >
+                    <input class="inputa" type="text" name="address" required placeholder="請輸入聯絡地址" value="{{ address }}">
+                </td></tr>
+
+                <tr><td><p class="title">email：</p></td></tr>
+                <tr><td >
+                    <input class="inputa" type="text" name="email" placeholder="請輸入email" value="{{ email }}">
+                </td></tr>
+
+
+                <tr><td align="center">
+                    <a href="logout"><input type="button" class="signup signup_right" value="登出"></a>
+                    <input type="submit" class="signup signup_right" value="保存">
+                    
+
+                </td></tr>
+                
+            </table>
+        </form>
+    </div>
 </body>
 </html>

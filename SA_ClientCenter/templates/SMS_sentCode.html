@@ -6,31 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href=" {% static 'assets/css/login.css' %} ">
+    <link rel="stylesheet" href=" {% static 'assets/css/login_1.css' %} ">
 </head>
 <body>
-    <div class="top">
+    <div class="all">
         <p class="title_text">簡訊認證</p>
+        <p class="verify">此次驗證編號：{{ make_uuid|slice:"-5:" }}</p>
+        <p>！！各組注意，在此重整會重發簡訊！！</p>
+        <form action="SMS_CheckCode" method='POST'>
+            {% csrf_token %} 
+            <table>
+                <tr><td><p class="title">手機號碼：</p></td></tr>
+                <tr><td >
+                    <input class="inputa" type="text" name="Tphone" placeholder="請輸入手機號碼" value="{{ Tphone }}" readonly>
+                </td></tr>
+                    
+                <tr><td><p class="title">驗證碼：</p></td></tr>
+                <tr><td >
+                    
+                    <input class="inputa" type="text" name="code" placeholder="請輸入驗證碼" value="">
+                    <input type="hidden" name="make_uuid" value={{ make_uuid }}>
+                    
+                </td></tr>
+
+                <tr><td align="center">
+                        <a href="/UserInterfaceApp/login_noAccount.html"><input type="button" class="signup signup_right" value="取消"></a>
+                        <input type="submit" class="signup" value="送出">
+
+                </td></tr>
+                
+            </table>
+        </form>
     </div>
-    <p>此次驗證編號：{{ make_uuid|slice:"-5:" }}</p>
-    <p>！！各組注意，在此重整會重發簡訊！！</p>
-    <form action="SMS_CheckCode" method='POST'>
-        {% csrf_token %} 
-        <div class="input_frame">
-            <input class="inputb" type="text" name="Tphone" placeholder="請輸入手機號碼" value="{{ Tphone }}" readonly>
-        </div>
-        <div class="input_frame">
-                <input class="inputa" type="text" name="code" placeholder="請輸入驗證碼" value="">
-                <input type="hidden" name="make_uuid" value={{ make_uuid }}>
-        </div>
-        <div class="input_frame">
-            <div class="signup_frame">
-                <a href="/UserInterfaceApp/login_noAccount.html"><input type="button" class="signup signup_right" value="取消"></a>
-            </div>
-            <div class="signup_frame">
-                <input type="submit" class="signup" value="送出">
-            </div>
-        </div> 
-    </form>
 </body>
 </html>

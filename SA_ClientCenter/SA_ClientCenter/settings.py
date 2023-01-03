@@ -25,7 +25,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-e3wt#i@&)h%!7+a*qyj$4+7f^^#=mhz9ly!-oewoqscene^$rk"
 
-CALLBACK_URL = "https://667f-140-135-113-240.jp.ngrok.io" + "/LineLoginApp/callback"
+NGROK_URL = "https://ac2d-2001-b400-e332-e89a-cc1c-4361-db16-e842.jp.ngrok.io"
+CALLBACK_URL = NGROK_URL + "/LineLoginApp/callback"
 
 LINE_CHANNEL_ID = "1657781063"
 LINE_CHANNEL_SECRET ="f37837763b09b05df0b39e317614f7f2"
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     "UserInterfaceApp",
     "DBmanageApp",
     "rest_framework",
+    'rest_framework.authtoken',
     "RESTapiApp",
 ]
 

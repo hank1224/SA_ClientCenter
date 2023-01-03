@@ -95,7 +95,7 @@ def SMS_CheckCode(request):
             SA_CC_ID = i.sUserID
         return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
     else:
-        HttpResponse("非POST表單")
+        return HttpResponse("非POST表單")
 
 
 
