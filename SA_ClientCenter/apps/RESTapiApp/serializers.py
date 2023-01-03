@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from DBmanageApp.models import UserData
-from RESTapiApp.models import getLineURL, getPK_Line
-
+from RESTapiApp.models import LineAPI_record
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -15,20 +14,20 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
-class getLineURL_Serializer(serializers.HyperlinkedModelSerializer):
+
+
+class Line_getBackurlSerializer(serializers.ModelSerializer):
     class Meta:
-        model = getLineURL
-        fields = ('Rstate')
+        model = LineAPI_record
+        fields = ['Rbackurl','Rstate']
 
-class Wash_UserSerializer(serializers.ModelSerializer):
+class Line_getStateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LineAPI_record
+        fields = ['Rstate','Rtime',]
 
-  class Meta:
-    model = UserData
-    #fields = '__all__' 呼叫所有檔案
-    #可以被傳送到智慧喜的資料
-    fields = ['sUserID', 'sNickName', 'sPhone', 'sAddress', 'sPictureUrl']
 
-    
+
 
 class Carbon_UserSerializer(serializers.ModelSerializer):
   class Meta:

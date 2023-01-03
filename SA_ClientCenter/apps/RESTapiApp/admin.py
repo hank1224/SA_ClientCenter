@@ -1,3 +1,11 @@
 from django.contrib import admin
+from RESTapiApp.models import LineAPI_record
 
-# Register your models here.
+class LineAPI_recordMain(admin.ModelAdmin):
+    list_display=('Rstate', 'RstateUsed','RlineID', 'Rtime', 'Rbackurl',)
+    ordering=('-Rtime',)
+    search_fields=('Rstate',)
+
+
+
+admin.site.register(LineAPI_record, LineAPI_recordMain)
