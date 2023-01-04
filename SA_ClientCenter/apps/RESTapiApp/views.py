@@ -1,13 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
-from RESTapiApp.models import LineAPI_record
+from rest_framework import status, viewsets
+from rest_framework.decorators import api_view, action
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import bad_request
 
-# Create your views here.
+from RESTapiApp.models import LineAPI_record
+from DBmanageApp.models import UserData
+
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+
 from RESTapiApp.serializers import UserSerializer, GroupSerializer
-from RESTapiApp.serializers import Line_getBackurlSerializer , Line_getStateSerializer
+from RESTapiApp.serializers import Line_getBackurlSerializer, Line_sendStateSerializer, Line_getStateSerializer, Line_sendUserIDSerializer
+
+from uuid import uuid4
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,17 +34,60 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class Line_getBackurlView(viewsets.ViewSet):
-    def create_state(self, request):
-    # 取得使用者提交的資料
-      RbackURL = request.data
-      # 使用序列化器處理資料
-      serializer = Line_getBackurlSerializer(data=RbackURL)
-      if serializer.is_valid():
-        # 建立新資料
-        new = serializer.save()
-        new_State = new.Rstate
-        print(new_State)
+class Line_1ViewSet(viewsets.ModelViewSet):
+    queryset = LineAPI_record.objects.all()
+    serializer_class = Line_getBackurlSerializer
+    permission_classes = (AllowAny,)
+    # authentication_classes = [TokenAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # self.perform_create(serializer)
+        rbackurl = serializer.validated_data['Rbackurl']
+        make_uuid = uuid4()
+        create_Rstate = LineAPI_record.objects.create(Rstate=make_uuid, Rbackurl=rbackurl)
+        Rserializer = Line_sendStateSerializer(instance=create_Rstate)
+        Rserializer.is_valid(raise_exception=True)
+        # return Response({'Rstate': create_Rstate.Rstate})
+        return Response(Rserializer.data)
+
+class Line_2ViewSet(viewsets.ModelViewSet):
+    queryset = LineAPI_record.objects.all()
+    serializer_class = Line_sendUserIDSerializer
+    permission_classes = (AllowAny,)
+
+    def get(request):
+        
+        serializer = Line_getStateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        rstate = serializer.validated_data['Rstate']
+        try:
+            getUserID = LineAPI_record.objects.get(Rstate=rstate, RstateUsed=False)
+            try:
+                LineAPI_record.objects.filter(Rstate=rstate).update(RstateUsed=True)
+                # userid = getUserID
+                # Rserializer = 
+
+            except:
+                return Response({"status_code": 500, "detail": "個資系統出問題，如果一直出現再跟我說"})
+        except:
+            return Response({"status_code": 409, "detail": "此Rstate已被使用過"})
+        
+        
+
+
+def LineLogin(request):
+    SA_CC_ID = request.GET.get('SA_CC_ID')
+    State = request.GET.get('state')
+    LineAPI_record.objects.filter(Rstate=State).update(RuserID=SA_CC_ID)
+
+
+
+
+
 
 
 

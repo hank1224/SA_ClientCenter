@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from DBmanageApp.models import UserData
 from RESTapiApp.models import LineAPI_record
+from uuid import uuid4
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -16,17 +17,21 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-class Line_getBackurlSerializer(serializers.ModelSerializer):
+class Line_getBackurlSerializer(serializers.Serializer):
+    Rbackurl = serializers.CharField(max_length=200, required=True, label='用戶要求line後返回網址')
+
+class Line_sendStateSerializer(serializers.ModelSerializer):
     class Meta:
         model = LineAPI_record
-        fields = ['Rbackurl','Rstate']
+        fields = ['Rstate', 'Rtime',]
 
-class Line_getStateSerializer(serializers.ModelSerializer):
+class Line_getStateSerializer(serializers.Serializer):
+    Rstate = serializers.CharField(max_length=36, required=True, label='從Line_1得到的Rstate')
+
+class Line_sendUserIDSerializer(serializers.Serializer):
     class Meta:
         model = LineAPI_record
-        fields = ['Rstate','Rtime',]
-
-
+        fields = ['Rstate', 'Rtime',]
 
 
 class Carbon_UserSerializer(serializers.ModelSerializer):
