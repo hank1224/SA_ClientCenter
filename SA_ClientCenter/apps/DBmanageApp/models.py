@@ -2,7 +2,7 @@ from django.db import models
 from uuid import uuid4
 
 def UserUUID():
-    return 'UserID-'+str(uuid4)
+    return 'UserID-'+str(uuid4())
 
 class UserData(models.Model):
     sUserID=models.CharField(max_length=43, primary_key=True, default=UserUUID, editable=False)

@@ -22,6 +22,27 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import *
 
+import json
+
+class Line_1View(APIView):
+    def get(self,request, *args, **kwargs):
+        rbackurl = request.GET.get('Rbackurl')
+        if not rbackurl:
+            return Response({"status_code": 400, "detail": "Rbackurl不得為空"})
+        try:
+            queryset = LineAPI_record.objects.create(Rbackurl=rbackurl)
+            try:
+                rstate = queryset.Rstate
+                rtime = queryset.Rtime
+                return Response({"Rstate": rstate, "Rtime": str(rtime)})
+            except:
+                return Response({"status_code": 500, "detail": "抓取RESTapi出錯，如果一直出現再跟我說"})
+        except:
+            return Response({"status_code": 500, "detail": "建立出錯LineAPI_record，如果一直出現再跟我說"})
+
+
+
+
 class Line_2View(APIView):
     def get(self,request, *args, **kwargs):
         rstate = request.GET.get('Rstate')
@@ -34,19 +55,13 @@ class Line_2View(APIView):
                     queryset = LineAPI_record.objects.filter(Rstate=rstate, RstateUsed=True)
                     try:
                         userid = "抓不到RuserID"
-                        try:
-                            for i in queryset:
-                                userid = i.RuserID
-                            try:
-                                if userid:
-                                    create_Access = AccessAPI_record.objects.create(RuserID=userid)
-                                    access_code = create_Access.Raccess_code
-                                    access_time = create_Access.Raccess_time
-                                    return Response({'RuserID': userid, 'Raccess_code': access_code, 'Raccess_time': access_time})
-                            except:
-                                HttpResponse("0")
-                        except:
-                            HttpResponse("1")        
+                        for i in queryset:
+                            userid = i.RuserID
+                            if userid:
+                                create_Access = AccessAPI_record.objects.create(RuserID=userid)
+                                access_code = create_Access.Raccess_code
+                                access_time = create_Access.Raccess_time
+                                return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time})      
                     except:
                         return Response({"status_code": 500, "detail": "建立Access_code出錯，如果一直出現再跟我說"})
                 except:

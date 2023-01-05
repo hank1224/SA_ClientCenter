@@ -58,8 +58,11 @@ def callback(request):
         access_token = response.json().get('access_token')
 
         #拒絕受予權限的話
+        print(access_token)
+
         if access_token == None:
             return HttpResponseRedirect('/UserInterfaceApp/alert_accessNO.html')
+            
         # id_token = response.json().get('id_token')
         # refresh_token = response.json().get('refresh_token')
 
