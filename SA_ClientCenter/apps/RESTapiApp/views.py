@@ -12,11 +12,109 @@ from rest_framework.exceptions import bad_request
 from RESTapiApp.models import LineAPI_record
 from DBmanageApp.models import UserData
 
-from django.contrib.auth.models import User, Group
-
 from RESTapiApp.serializers import *
 
-from uuid import uuid4
+from datetime import timedelta
+from django.utils import timezone
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .serializers import *
+
+class Line_2View(APIView):
+    def get(self,request, *args, **kwargs):
+        rstate = request.GET.get('Rstate')
+        try:
+            LineAPI_record.objects.get(Rstate=rstate)
+            try:
+                LineAPI_record.objects.get(Rstate=rstate, RstateUsed=False)
+                try:
+                    LineAPI_record.objects.filter(Rstate=rstate, RstateUsed=False).update(RstateUsed=True)
+                    queryset = LineAPI_record.objects.filter(Rstate=rstate, RstateUsed=True)
+                    try:
+                        userid = "抓不到RuserID"
+                        try:
+                            for i in queryset:
+                                userid = i.RuserID
+                            try:
+                                if userid:
+                                    create_Access = AccessAPI_record.objects.create(RuserID=userid)
+                                    access_code = create_Access.Raccess_code
+                                    access_time = create_Access.Raccess_time
+                                    return Response({'RuserID': userid, 'Raccess_code': access_code, 'Raccess_time': access_time})
+                            except:
+                                HttpResponse("0")
+                        except:
+                            HttpResponse("1")        
+                    except:
+                        return Response({"status_code": 500, "detail": "建立Access_code出錯，如果一直出現再跟我說"})
+                except:
+                    return Response({"status_code": 500, "detail": "更新RstateUsed出錯，如果一直出現再跟我說"})
+            except ObjectDoesNotExist:
+                return Response({"status_code": 409, "detail": "此Rstate已被使用"})
+        except ObjectDoesNotExist:
+            return Response({"status_code": 404, "detail": "找不到此Rstate"})
+
+
+class Line_3View(APIView):
+    def get(self,request, *args, **kwargs):
+        raccess_code = request.GET.get('Raccess_code')
+        now = timezone.now()
+        earlier = now - timedelta(minutes=10)
+        try:
+            AccessAPI_record.objects.get(Raccess_code=raccess_code)
+            try:
+                AccessAPI_record.objects.get(Raccess_time__gte=earlier, Raccess_code=raccess_code)
+                queryset = AccessAPI_record.objects.filter(Raccess_time__gte=earlier, Raccess_code=raccess_code)
+                userid = "抓不到sUserID"
+                for i in queryset:
+                    userid=i.RuserID
+                try:
+                    UserData.objects.get(sUserID=userid)
+                    try:
+                        Bqueryset = UserData.objects.filter(sUserID=userid)
+                        LineID="抓不到"
+                        Name="抓不到"
+                        NickName = "抓不到"
+                        Phone="抓不到"
+                        PhoneAuth="抓不到"
+                        Address="抓不到"
+                        Email="抓不到"
+                        PictureUrl="抓不到"
+                        for i in Bqueryset:
+                            LineID = i.sLineID
+                            Name = i.sName
+                            NickName = i.sNickName
+                            Phone = i.sPhone
+                            PhoneAuth = i.sPhoneAuth
+                            Address = i.sAddress
+                            Email = i.sEmail
+                            PictureUrl = i.sPictureUrl
+                        return Response({
+                            "sUser": userid, 
+                            "sLineID": LineID,
+                            "sName": Name,
+                            "NickName": NickName,
+                            "sPhone": Phone,
+                            "shoneAuth": PhoneAuth,
+                            "sAddress": Address,
+                            "sEmail": Email,
+                            "sPictureURL": PictureUrl,
+                            })
+                    except:
+                        return Response({"status_code": 500, "detail": "產生資料發生問題"})
+                except ObjectDoesNotExist:
+                    return Response({"status_code": 404, "detail": "UserData找不到個人資料"})
+            except ObjectDoesNotExist:
+                return Response({"status_code": 409, "detail": "此Raccess_code已過期"})
+        except ObjectDoesNotExist:
+            return Response({"status_code": 404, "detail": "找不到此Raccess_code"})
+
+
+
+
+
 
 
 
@@ -24,9 +122,9 @@ def LineLogin(request):
     SA_CC_ID = request.GET.get('SA_CC_ID')
     State = request.GET.get('state')
     try:
-        LineAPI_record.objects.filter(Rstate=State).update(RuserID=SA_CC_ID, RstateUsed=True)
+        LineAPI_record.objects.filter(Rstate=State).update(RuserID=SA_CC_ID)
     except ObjectDoesNotExist:
-        return HttpResponse("該State已被使用，或找不到此State")
+        return HttpResponse("找不到此State")
     getBackurl = LineAPI_record.objects.get(Rstate=State)
     backurl = getBackurl.Rbackurl
     return HttpResponseRedirect(backurl)
