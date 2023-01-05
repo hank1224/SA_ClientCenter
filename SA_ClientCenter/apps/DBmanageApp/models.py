@@ -1,11 +1,12 @@
 from django.db import models
-from uuid import uuid1
+from uuid import uuid4
+
+def UserUUID():
+    return 'UserID-'+str(uuid4)
 
 class UserData(models.Model):
-    sUserID=models.CharField(max_length=36, primary_key=True, default=uuid1)
+    sUserID=models.CharField(max_length=43, primary_key=True, default=UserUUID, editable=False)
     sLineID=models.CharField(max_length=33, blank=False, null=True)
-    # sAccount=models.CharField(max_length=20, blank=False, null=True, unique=True)
-    # sPassword=models.CharField(max_length=20, blank=False, null=True)
     sName=models.CharField(max_length=20, blank=False, null=True)
     sNickName = models.CharField(max_length=50, blank=False, null=True)
     sPhone=models.CharField(max_length=20, blank=False, null=True)

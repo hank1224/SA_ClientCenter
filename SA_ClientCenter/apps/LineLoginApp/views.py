@@ -97,7 +97,7 @@ def callback(request):
             SA_CC_ID = i.sUserID
 
         if Lstate != "rayIs9ay": #回傳的state判斷，來源不是此系統，是從其他地方，轉發UserID給RESTapi做返回
-            return redirect('/RESTapiApp/Linelogin?'+'SA_CC_ID='+SA_CC_ID+'&state='+Lstate)
+            return redirect('/RESTapiApp/LineLogin/?'+'SA_CC_ID='+SA_CC_ID+'&state='+Lstate)
 
         if Lstate == "rayIs9ay": #來源為本系統，發session給他做登入
             return redirect('/UserInterfaceApp/Login_and_AddSession?'+'SA_CC_ID='+SA_CC_ID)
