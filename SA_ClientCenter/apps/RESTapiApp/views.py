@@ -62,7 +62,9 @@ class Line_2View(APIView):
                                 create_Access = AccessAPI_record.objects.create(RuserID=userid)
                                 access_code = create_Access.Raccess_code
                                 access_time = create_Access.Raccess_time
-                                return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time})      
+                                return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time}) 
+                            else:
+                                return Response({"detail": "抓不到RuserID，使用者還未使用State給line做登入，此State已作廢"},status=status.HTTP_406_NOT_ACCEPTABLE)    
                     except:
                         return Response({"detail": "建立Access_code出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 except:
