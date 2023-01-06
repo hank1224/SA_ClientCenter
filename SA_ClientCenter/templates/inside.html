@@ -33,7 +33,7 @@
                 <tr><td><p class="title">手機號碼：{% if phoneauth == True %} (已驗證){% endif %}</p></td></tr>
                 <tr><td>
                     <input class="inputa check" type="text" name="phone" required placeholder="請輸入手機電話" value="{{ phone }}" {% if phoneauth == True %} disabled="true"  {%endif %}>
-                    
+                    {% if phoneauth == True %}<input type='hidden' name="phone" value="{{ phone }}"> {%endif %}
                 </td></tr>
 
                 <tr><td><p class="title">住址：</p></td></tr>

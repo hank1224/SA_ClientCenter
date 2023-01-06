@@ -62,7 +62,7 @@ def Login_and_AddSession(request):
 
 def login_check(request):
     if not 'UserID' in request.session:
-        check_return = HttpResponseRedirect('login_noAccount.html')
+        check_return = HttpResponseRedirect('/UserInterfaceApp/login_noAccount.html')
     elif 'UserID' in request.session:
         check_return = True
     else:
