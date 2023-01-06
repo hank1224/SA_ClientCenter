@@ -20,10 +20,12 @@ def submitUserData(request):
 
             userdata = UserData.objects.filter(sUserID=request.session['UserID'])
             userauth=""
+            phone=""
             for i in userdata:
                 userauth = i.sPhoneAuth
+                phone = i.sPhone
             print(userauth,Phone)
-
+            print(request.session['UserID'])
             if userauth == True:
                 try:
                     UserData.objects.get(sPhone=Phone)

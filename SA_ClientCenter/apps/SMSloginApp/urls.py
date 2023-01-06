@@ -18,7 +18,7 @@ from django.urls import path, include
 from SMSloginApp import views
 
 urlpatterns = [
-    path('index.html', views.check_phoneNUM),
+    # path('index.html', views.check_phoneNUM),
     path('send_SMS', views.send_SMS),
     path('SMS_auth.html', views.SMS_auth_page),
     path('SMS_sentCode.html', views.SMS_sentCode_page),

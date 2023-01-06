@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
 
 from rest_framework import status, viewsets
 from rest_framework.response import Response
@@ -19,16 +20,18 @@ from django.utils import timezone
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
-from .serializers import *
+from rest_framework import status 
 
+import urllib.parse
+import urllib.request
+import random
 import json
 
 class Line_1View(APIView):
     def get(self,request, *args, **kwargs):
         rbackurl = request.GET.get('Rbackurl')
         if not rbackurl:
-            return Response({"status_code": 400, "detail": "Rbackurl不得為空"})
+            return Response({"detail": "Rbackurl不得為空"},status=status.HTTP_400_BAD_REQUEST)
         try:
             queryset = LineAPI_record.objects.create(Rbackurl=rbackurl)
             try:
@@ -36,11 +39,9 @@ class Line_1View(APIView):
                 rtime = queryset.Rtime
                 return Response({"Rstate": rstate, "Rtime": str(rtime)})
             except:
-                return Response({"status_code": 500, "detail": "抓取RESTapi出錯，如果一直出現再跟我說"})
+                return Response({"detail": "抓取RESTapi出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except:
-            return Response({"status_code": 500, "detail": "建立出錯LineAPI_record，如果一直出現再跟我說"})
-
-
+            return Response({"detail": "建立出錯LineAPI_record，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class Line_2View(APIView):
@@ -63,16 +64,16 @@ class Line_2View(APIView):
                                 access_time = create_Access.Raccess_time
                                 return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time})      
                     except:
-                        return Response({"status_code": 500, "detail": "建立Access_code出錯，如果一直出現再跟我說"})
+                        return Response({"detail": "建立Access_code出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 except:
-                    return Response({"status_code": 500, "detail": "更新RstateUsed出錯，如果一直出現再跟我說"})
+                    return Response({"detail": "更新RstateUsed出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except ObjectDoesNotExist:
-                return Response({"status_code": 409, "detail": "此Rstate已被使用"})
+                return Response({"detail": "此Rstate已被使用"},status=status.HTTP_409_CONFLICT)
         except ObjectDoesNotExist:
-            return Response({"status_code": 404, "detail": "找不到此Rstate"})
+            return Response({"detail": "找不到此Rstate"},status=status.HTTP_404_NOT_FOUND)
 
 
-class Line_3View(APIView):
+class Access_View(APIView):
     def get(self,request, *args, **kwargs):
         raccess_code = request.GET.get('Raccess_code')
         now = timezone.now()
@@ -118,22 +119,84 @@ class Line_3View(APIView):
                             "sPictureURL": PictureUrl,
                             })
                     except:
-                        return Response({"status_code": 500, "detail": "產生資料發生問題"})
+                        return Response({"detail": "產生資料發生問題"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 except ObjectDoesNotExist:
-                    return Response({"status_code": 404, "detail": "UserData找不到個人資料"})
+                    return Response({"detail": "UserData找不到個人資料"},status=status.HTTP_404_NOT_FOUND)
             except ObjectDoesNotExist:
-                return Response({"status_code": 409, "detail": "此Raccess_code已過期"})
+                return Response({"detail": "此Raccess_code已過期"},status=status.HTTP_409_CONFLICT)
         except ObjectDoesNotExist:
-            return Response({"status_code": 404, "detail": "找不到此Raccess_code"})
+            return Response({"detail": "找不到此Raccess_code"},status=status.HTTP_404_NOT_FOUND)
 
 
+class SMS_1View(APIView):
+    def get(self,request, *args, **kwargs):
+        rphone = request.GET.get('Rphone')
+        phone = str(rphone)
+        if len(phone) != 10 or rphone.startswith('09') != True:
+            return Response({"status_code": 400, "detail": "Rphone格式不接受，需有10碼且是 09 開頭"})
+        else:    
+            try:
+                UserData.objects.get(sPhone=rphone, sPhoneAuth=True)
+                try:
+                    rsmsid, code = send_SMS(rphone)
+                    # queryset = SMSAPI_record.objects.create(Rphone=rphone)
+                    try:
+                        # rsmsid = queryset.RSMSid
+                        # rtime = queryset.Rtime
+                        return Response({"RSMSid": rsmsid})
+                    except:
+                        return Response({"detail": "抓取RESTapi出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except:
+                    return Response({"detail": "建立出錯SMSAPI_record，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except ObjectDoesNotExist:
+                return Response({"detail": "這隻電話尚未在本系統實名註冊"},status=status.HTTP_404_NOT_FOUND)
+
+class SMS_2View(APIView):
+    def get(self,request, *args, **kwargs):
+        rsmsid = request.GET.get('RSMSid')
+        rsms_code = request.GET.get('RSMS_code')
+        try:
+            SMSAPI_record.objects.get(RSMSid=rsmsid)
+            try:
+                SMSAPI_record.objects.get(RSMSid=rsmsid, RSMSidUsed=False)
+                try:
+                    SMSAPI_record.objects.filter(RSMSid=rsmsid, RSMSidUsed=False).update(RSMSidUsed=True)
+                    queryset = SMSAPI_record.objects.filter(RSMSid=rsmsid, RSMSidUsed=True)
+                    try:
+                        inside_SMSode = "抓不到"
+                        rphone=""
+                        for i in queryset:
+                            rphone = i.Rphone
+                            inside_SMSode = i.RSMS_code
+                            if rsms_code == inside_SMSode:
+                                try:
+                                    UserData.objects.get(sPhone=rphone, sPhoneAuth=True)
+                                    try:
+                                        querysetU = UserData.objects.filter(sPhone=rphone, sPhoneAuth=True)
+                                        userid="抓不到"
+                                        for i in querysetU:
+                                            userid = i.sUserID
+                                        create_Access = AccessAPI_record.objects.create(RuserID=userid)
+                                        access_code = create_Access.Raccess_code
+                                        access_time = create_Access.Raccess_time
+                                        return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time}) 
+                                    except:
+                                        return Response({"detail": "建立Access_code出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                                except ObjectDoesNotExist:
+                                    return Response({"detail": "驗證成功，但找不到已驗證的此號碼"},status=status.HTTP_404_NOT_FOUND)
+                            else:
+                                return Response({"detail": "驗證失敗"},status=status.HTTP_406_NOT_ACCEPTABLE)
+                    except:
+                        return Response({"detail": "建立Access_code出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                except:
+                    return Response({"detail": "更新RSMSidUsed出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            except ObjectDoesNotExist:
+                return Response({"detail": "此RSMSid已被使用"},status=status.HTTP_409_CONFLICT)
+        except ObjectDoesNotExist:
+            return Response({"detail": "找不到此RSMSid"},status=status.HTTP_404_NOT_FOUND)
 
 
-
-
-
-
-def LineLogin(request):
+def LineLogin(request): # 從linelogin app  view接入
     SA_CC_ID = request.GET.get('SA_CC_ID')
     State = request.GET.get('state')
     try:
@@ -143,6 +206,33 @@ def LineLogin(request):
     getBackurl = LineAPI_record.objects.get(Rstate=State)
     backurl = getBackurl.Rbackurl
     return HttpResponseRedirect(backurl)
+
+
+def send_SMS(rphone):
+        code=str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))+str(random.randint(0, 9))
+        username = settings.SMS_ACCOUNT
+        password = settings.SMS_PASSWORD
+        mobile = rphone
+        make_uuid = str(uuid4())
+        a = "RSMSid-"
+        rsmsid = ''.join([a, make_uuid])
+        message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
+        print("您的驗證碼："+code)
+        message = urllib.parse.quote(message)
+
+        msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message
+        url = 'http://api.twsms.com/json/sms_send.php?'+msg
+
+        # 這行掛上去就真的會發簡訊！
+        # resp = urllib.request.urlopen(url)
+        # 這行掛上去就真的會發簡訊！
+
+        API_SMSrecord = SMSAPI_record.objects.create(RSMSid=rsmsid, Rphone=rphone, RSMS_code=code)
+
+        return rsmsid, code
+
+        
+
 
 def make_token(request):
     from rest_framework.authtoken.models import Token

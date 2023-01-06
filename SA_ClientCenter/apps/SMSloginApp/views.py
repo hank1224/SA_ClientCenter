@@ -23,11 +23,9 @@ def SMS_sentCode_page(request):
         if len(Tphone) != 10 or Tphone.startswith('09') != True:
             vaildPhone = False
             return render(request, 'SMS_auth.html', locals())
-        # if check_phoneNUM(Tphone) != True:
-        #     registed = True
-        #     return render(request, 'SMS_auth.html', locals())
 
         make_uuid = send_SMS(Tphone)
+
         return render(request, 'SMS_sentCode.html', locals())
 
 def send_SMS(Tphone):
@@ -43,26 +41,12 @@ def send_SMS(Tphone):
         msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message
         url = 'http://api.twsms.com/json/sms_send.php?'+msg
 
+        # 這行掛上去就真的會發簡訊！
         # resp = urllib.request.urlopen(url)
-        # print(resp.read())
-        SMSrecord.objects.create(SID=make_uuid, SCode=code, SPhone=mobile)
+        # 這行掛上去就真的會發簡訊！
+
+        new_SMSrecord = SMSrecord.objects.create(SID=make_uuid, SCode=code, SPhone=Tphone)
         return make_uuid
-
-def check_phoneNUM(Tphone):
-    try:
-        UserData.objects.get(sPhone=Tphone)
-        # return HttpResponse("此號碼已被人註冊")
-        return False
-    except MultipleObjectsReturned:
-        # return HttpResponse("此電話有多於一人註冊，請洽客服")
-        return False
-    except ObjectDoesNotExist:
-        # return HttpResponse("沒人用過")
-        return True
-    except:
-        # 沒抓到Tphone
-        return False
-
 
 @csrf_exempt
 def SMS_CheckCode(request):

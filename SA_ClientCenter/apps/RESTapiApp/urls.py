@@ -8,7 +8,7 @@ router = routers.DefaultRouter()
 router.register(r'users', viewsets.UserViewSet)
 router.register(r'groups', viewsets.GroupViewSet)
 
-# router.register(r'Line_1', viewsets.Line_1ViewSet, "Line_1 get RState")
+router.register(r'Line_1ViewSets', viewsets.Line_1ViewSet, "Line_1 get RState")
 
 
 # 使用自动URL路由连接我们的API。
@@ -22,5 +22,7 @@ urlpatterns = [
 
     re_path(r'^Line_1/$', views.Line_1View.as_view()),
     re_path(r'^Line_2/$', views.Line_2View.as_view()),
-    re_path(r'^Line_3/$', views.Line_3View.as_view()),
+    re_path(r'^SMS_1/$', views.SMS_1View.as_view()),
+    re_path(r'^SMS_2/$', views.SMS_2View.as_view()),
+    re_path(r'^Access/$', views.Access_View.as_view()),
 ]
