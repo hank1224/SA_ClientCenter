@@ -128,7 +128,7 @@ class SMS_1View(APIView):
         rphone = request.GET.get('Rphone')
         phone = str(rphone)
         if len(phone) != 10 or rphone.startswith('09') != True:
-            return Response({"status_code": 400, "detail": "Rphone格式不接受，需有10碼且是 09 開頭"})
+            return Response({"detail": "Rphone格式不接受，需有10碼且是 09 開頭"},status=status.HTTP_400_BAD_REQUEST)
         else:    
             try:
                 UserData.objects.get(sPhone=rphone, sPhoneAuth=True)
