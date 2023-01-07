@@ -19,22 +19,7 @@ def index_page(request):
 
 def in_page(request):
     return render(request, 'in.html')
-"""
-def session_Update(request):
-    if not "SA_CC" in request.session:
-        request.session['SA_CC'] = True
-        request.session.set_expiry(60*20) #存在20分鐘
-    else:
-        session_clear(request)
-        session_Update(request)
 
-def session_clear(request):
-    request.session.clear()
-
-def logout(request):
-    session_clear(request)
-    return HttpResponseRedirect('/LineLoginApp/index.html')
-"""
 @csrf_exempt
 def callback(request):
     if request.method == 'GET':

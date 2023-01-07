@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt #資安
 from django.conf import settings
 
@@ -35,7 +35,7 @@ def send_SMS(Tphone):
         mobile = Tphone
         make_uuid = str(uuid4())
         message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
-        print("您的驗證碼："+code)
+        print("個資系統登入驗證碼："+code)
         message = urllib.parse.quote(message)
 
         msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message

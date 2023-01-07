@@ -22,8 +22,8 @@ def submitUserData(request):
             userauth=""
             for i in userdata:
                 userauth = i.sPhoneAuth
-            print(userauth,Phone)
-            print(request.session['UserID'])
+            # print(userauth,Phone)
+            # print(request.session['UserID'])
             if userauth == True:
                 try:
                     UserData.objects.get(sPhone=Phone)

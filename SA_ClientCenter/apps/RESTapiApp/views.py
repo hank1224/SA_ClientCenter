@@ -1,19 +1,12 @@
-from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.views.decorators.http import require_http_methods
 from django.conf import settings
 
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.exceptions import bad_request
 
-from RESTapiApp.models import LineAPI_record
+from RESTapiApp.models import *
 from DBmanageApp.models import UserData
-
-from RESTapiApp.serializers import *
 
 from datetime import timedelta
 from django.utils import timezone
@@ -25,7 +18,7 @@ from rest_framework import status
 import urllib.parse
 import urllib.request
 import random
-import json
+from uuid import uuid4
 
 class Line_1View(APIView):
     def get(self,request, *args, **kwargs):
@@ -141,10 +134,7 @@ class SMS_1View(APIView):
                 UserData.objects.get(sPhone=rphone, sPhoneAuth=True)
                 try:
                     rsmsid, code = send_SMS(rphone)
-                    # queryset = SMSAPI_record.objects.create(Rphone=rphone)
                     try:
-                        # rsmsid = queryset.RSMSid
-                        # rtime = queryset.Rtime
                         return Response({"RSMSid": rsmsid})
                     except:
                         return Response({"detail": "抓取RESTapi出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -219,7 +209,7 @@ def send_SMS(rphone):
         a = "RSMSid-"
         rsmsid = ''.join([a, make_uuid])
         message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
-        print("您的驗證碼："+code)
+        print("API登入驗證碼："+code)
         message = urllib.parse.quote(message)
 
         msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message
@@ -232,19 +222,3 @@ def send_SMS(rphone):
         API_SMSrecord = SMSAPI_record.objects.create(RSMSid=rsmsid, Rphone=rphone, RSMS_code=code)
 
         return rsmsid, code
-
-        
-
-
-def make_token(request):
-    from rest_framework.authtoken.models import Token
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
-    
-    listA = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14']
-    test=0
-    for A in listA:
-        user = User.objects.get(username=A)     
-        Token.objects.create(user=user)
-        test += 1
-    HttpResponse("if 14, Success make token, test= " + str(test) )

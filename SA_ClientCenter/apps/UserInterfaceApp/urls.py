@@ -19,7 +19,6 @@ from UserInterfaceApp import views
 
 urlpatterns = [
     path('login_noAccount.html', views.login_noAccount_page),
-    path('login_Account.html', views.login_Account_page),
     path('inside.html', views.inside_page),
     path('logout', views.logout),
     path('Login_and_AddSession', views.Login_and_AddSession),

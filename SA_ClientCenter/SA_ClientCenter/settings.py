@@ -25,15 +25,15 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-e3wt#i@&)h%!7+a*qyj$4+7f^^#=mhz9ly!-oewoqscene^$rk"
 
-NGROK_URL = "https://4857-2001-b400-e339-80f8-e887-507d-e4c0-2a48.jp.ngrok.io"
+NGROK_URL = ""
 CALLBACK_URL = NGROK_URL + "/LineLoginApp/callback"
 
-LINE_CHANNEL_ID = "1657781063"
-LINE_CHANNEL_SECRET ="f37837763b09b05df0b39e317614f7f2"
+LINE_CHANNEL_ID = ""
+LINE_CHANNEL_SECRET =""
 
 # https://www.twsms.com/
-SMS_ACCOUNT = "howardtuansa87"
-SMS_PASSWORD = "howardtuansa878"
+SMS_ACCOUNT = ""
+SMS_PASSWORD = ""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

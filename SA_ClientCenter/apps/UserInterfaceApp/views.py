@@ -19,9 +19,6 @@ def alert_saved_page(request):
 def alert_NOTuniquePhone_page(request):
     return render(request, 'alert_NOTuniquePhone.html')
 
-def login_Account_page(request):
-    return render(request, 'login_Account.html')
-
 def alert_accessNO_page(request):
     return render(request, 'alert_accessNO.html')
 

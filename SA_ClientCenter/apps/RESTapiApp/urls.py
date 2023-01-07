@@ -18,7 +18,6 @@ urlpatterns = [
     re_path(r'^', include(router.urls)),
     re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     re_path('LineLogin/', views.LineLogin),
-    re_path('make_token', views.make_token),
 
     re_path(r'^Line_1/$', views.Line_1View.as_view()),
     re_path(r'^Line_2/$', views.Line_2View.as_view()),

@@ -21,5 +21,4 @@ urlpatterns = [
     re_path('^callback', callback),
     path('index.html', index_page),
     path('in', in_page),
-    # path('logout', logout)
 ]
