@@ -1,34 +1,43 @@
-# SA_ClientCenter
+## 此為陳澔恩爆肝一個禮拜寫出的系統，瞟竊程式碼前請先摸摸你的良心
 
 如果想不透API為何回傳錯誤，可以到/apps/RESTapiApp/views.py 查詢try catch報錯原理
 
-## 此為陳澔恩爆肝一個禮拜寫出的系統，瞟竊程式碼前請先摸摸你的良心
+**首頁：(ngrok地址)/UserInterfaceApp/login_noAccount.html**
 
-**bold**首頁：(ngrok地址)/UserInterfaceApp/login_onAccount.html
-**bold**API:(ngrok地址)/RESTapiApp/
+ **API：(ngrok地址)/RESTapiApp/**
 
-`/RESTapiApp/Line_1/`
-用戶傳送:Rbackurl
-回傳:Rstate
+ `/RESTapiApp/Line_1/`
+ 
+ * 用戶傳送:Rbackurl
+ 
+    * 回傳:Rstate
 
 `/RESTapiApp/Line_2/`
-用戶傳送:Rstate
-回傳:RuserID, Raccess_code
+
+ * 用戶傳送:Rstate
+
+    * 回傳:RuserID, Raccess_code
 
 `/RESTapiApp/Access/`
-用戶傳送:Raccess_code
-回傳：所有個人資料
+
+ * 用戶傳送:Raccess_code
+
+    * 回傳：所有個人資料
 
 `/RESTapiApp/SMS_1/`
-用戶傳送:Rphone
-回傳:RSMSid
+
+ * 用戶傳送:Rphone
+
+    * 回傳:RSMSid
 
 `/RESTapiApp/SMS_2/`
-用戶傳送:RSMSid, RSMS_code
-回傳:RuserID, Raccess_code
 
-######第一次pull請先
-```sh
+ * 用戶傳送:RSMSid, RSMS_code
+
+    * 回傳:RuserID, Raccess_code
+
+**第一次pull請先**
+```py
 python manage.py makemigrations
 python manage.py migrate
 #這樣才會建立db檔，然後建立使用者去登入admin
