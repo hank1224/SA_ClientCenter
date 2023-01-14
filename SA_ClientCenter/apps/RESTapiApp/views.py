@@ -1,12 +1,19 @@
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.views.decorators.http import require_http_methods
 from django.conf import settings
 
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import bad_request
 
-from RESTapiApp.models import *
+from RESTapiApp.models import LineAPI_record
 from DBmanageApp.models import UserData
+
+from RESTapiApp.serializers import *
 
 from datetime import timedelta
 from django.utils import timezone
@@ -18,7 +25,7 @@ from rest_framework import status
 import urllib.parse
 import urllib.request
 import random
-from uuid import uuid4
+import json
 
 class Line_1View(APIView):
     def get(self,request, *args, **kwargs):
@@ -55,6 +62,7 @@ class Line_2View(APIView):
                                 create_Access = AccessAPI_record.objects.create(RuserID=userid)
                                 access_code = create_Access.Raccess_code
                                 access_time = create_Access.Raccess_time
+                                print("Line_2 send: "+userid)
                                 return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time}) 
                             else:
                                 return Response({"detail": "抓不到RuserID，使用者還未使用State給line做登入，此State已作廢"},status=status.HTTP_406_NOT_ACCEPTABLE)    
@@ -72,7 +80,7 @@ class Access_View(APIView):
     def get(self,request, *args, **kwargs):
         raccess_code = request.GET.get('Raccess_code')
         now = timezone.now()
-        earlier = now - timedelta(minutes=10)
+        earlier = now - timedelta(minutes=30)
         try:
             AccessAPI_record.objects.get(Raccess_code=raccess_code)
             try:
@@ -87,7 +95,7 @@ class Access_View(APIView):
                         Bqueryset = UserData.objects.filter(sUserID=userid)
                         LineID="抓不到"
                         Name="抓不到"
-                        NickName = "抓不到"
+                        NickName ="抓不到"
                         Phone="抓不到"
                         PhoneAuth="抓不到"
                         Address="抓不到"
@@ -102,19 +110,20 @@ class Access_View(APIView):
                             Address = i.sAddress
                             Email = i.sEmail
                             PictureUrl = i.sPictureUrl
+                        print("Access send Name: "+Name+", nkName: "+NickName)
                         return Response({
                             "sUser": userid, 
                             "sLineID": LineID,
                             "sName": Name,
-                            "NickName": NickName,
+                            "sNickName": NickName,
                             "sPhone": Phone,
-                            "shoneAuth": PhoneAuth,
+                            "sPhoneAuth": PhoneAuth,
                             "sAddress": Address,
                             "sEmail": Email,
-                            "sPictureURL": PictureUrl,
+                            "sPictureUrl": PictureUrl,
                             })
                     except:
-                        return Response({"detail": "產生資料發生問題"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                        return Response({"detail": "產生資料發生問題，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 except ObjectDoesNotExist:
                     return Response({"detail": "UserData找不到個人資料"},status=status.HTTP_404_NOT_FOUND)
             except ObjectDoesNotExist:
@@ -134,7 +143,10 @@ class SMS_1View(APIView):
                 UserData.objects.get(sPhone=rphone, sPhoneAuth=True)
                 try:
                     rsmsid, code = send_SMS(rphone)
+                    # queryset = SMSAPI_record.objects.create(Rphone=rphone)
                     try:
+                        # rsmsid = queryset.RSMSid
+                        # rtime = queryset.Rtime
                         return Response({"RSMSid": rsmsid})
                     except:
                         return Response({"detail": "抓取RESTapi出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -171,6 +183,7 @@ class SMS_2View(APIView):
                                         create_Access = AccessAPI_record.objects.create(RuserID=userid)
                                         access_code = create_Access.Raccess_code
                                         access_time = create_Access.Raccess_time
+                                        print("SMS_2 send: "+userid)
                                         return Response({'RuserID':userid, 'Raccess_code': access_code, 'Raccess_time': access_time}) 
                                     except:
                                         return Response({"detail": "建立Access_code出錯，如果一直出現再跟我說"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -209,16 +222,32 @@ def send_SMS(rphone):
         a = "RSMSid-"
         rsmsid = ''.join([a, make_uuid])
         message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
-        print("API登入驗證碼："+code)
+        print(mobile+", API驗證:"+code)
         message = urllib.parse.quote(message)
 
         msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message
         url = 'http://api.twsms.com/json/sms_send.php?'+msg
 
         # 這行掛上去就真的會發簡訊！
-        # resp = urllib.request.urlopen(url)
+        resp = urllib.request.urlopen(url)
         # 這行掛上去就真的會發簡訊！
 
         API_SMSrecord = SMSAPI_record.objects.create(RSMSid=rsmsid, Rphone=rphone, RSMS_code=code)
 
         return rsmsid, code
+
+        
+
+
+def make_token(request):
+    from rest_framework.authtoken.models import Token
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    
+    listA = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14']
+    test=0
+    for A in listA:
+        user = User.objects.get(username=A)     
+        Token.objects.create(user=user)
+        test += 1
+    HttpResponse("if 14, Success make token, test= " + str(test) )

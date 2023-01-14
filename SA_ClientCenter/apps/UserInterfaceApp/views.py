@@ -4,6 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt #資安
 from DBmanageApp.models import UserData
 
+def readme(request):
+    SACC_NGROK=settings.NGROK_URL
+    return render(request, 'readme.html', locals())
+
 
 def login_noAccount_page(request):
     reurl = settings.CALLBACK_URL
@@ -19,6 +23,9 @@ def alert_saved_page(request):
 def alert_NOTuniquePhone_page(request):
     return render(request, 'alert_NOTuniquePhone.html')
 
+def login_Account_page(request):
+    return render(request, 'login_Account.html')
+
 def alert_accessNO_page(request):
     return render(request, 'alert_accessNO.html')
 
@@ -32,6 +39,7 @@ def inside_page(request):
             address = "" if queryset.sAddress == None else queryset.sAddress
             email = "" if queryset.sEmail == None else queryset.sEmail
             phoneauth = queryset.sPhoneAuth
+        print("Name: "+name+" nkName: "+nickname+" is inside.html")
         return render(request, 'inside.html', locals())
     else:
         return login_check(request)
@@ -53,7 +61,7 @@ def Login_and_AddSession(request):
             pass
     request.session['UserID'] = SA_CC_ID
     request.session.modified = True
-    request.session.set_expiry(60*20) #存在20分鐘
+    request.session.set_expiry(60*10) #存在20分鐘
     return HttpResponseRedirect('inside.html')
     # return HttpResponse(request.session['UserID'])
 

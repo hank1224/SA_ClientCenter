@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.UserInterfaceApp.views import readme
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('LineLoginApp/', include("LineLoginApp.urls")),
@@ -23,4 +25,6 @@ urlpatterns = [
     path('UserInterfaceApp/', include("UserInterfaceApp.urls")),
     path('DBmanageApp/', include("DBmanageApp.urls")),
     path('RESTapiApp/', include("RESTapiApp.urls")),
+    path('', view=readme),
 ]
+

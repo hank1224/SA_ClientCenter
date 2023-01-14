@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt #資安
 from django.conf import settings
 
@@ -35,14 +35,14 @@ def send_SMS(Tphone):
         mobile = Tphone
         make_uuid = str(uuid4())
         message = "歡迎使用SA_CC，您的驗證碼為："+code+"\n請在 10 分鐘內進行驗證，切勿將驗證碼洩漏他人。\n此次驗證編號"+make_uuid[-5:]
-        print("個資系統登入驗證碼："+code)
+        print(mobile+",本地簡訊驗證："+code)
         message = urllib.parse.quote(message)
 
         msg = 'username='+username+'&password='+password+'&mobile='+mobile+'&message='+message
         url = 'http://api.twsms.com/json/sms_send.php?'+msg
 
         # 這行掛上去就真的會發簡訊！
-        # resp = urllib.request.urlopen(url)
+        resp = urllib.request.urlopen(url)
         # 這行掛上去就真的會發簡訊！
 
         new_SMSrecord = SMSrecord.objects.create(SID=make_uuid, SCode=code, SPhone=Tphone)
@@ -60,6 +60,7 @@ def SMS_CheckCode(request):
             dbcode = i.SCode
         if code != dbcode:
             vaildCode = False
+            print(phone+" Auth SMS fail !")
             return render(request, 'SMS_auth.html', locals()) #驗證失敗
         else:
             try: #檢查是否新來的
@@ -70,6 +71,7 @@ def SMS_CheckCode(request):
                 #這裡是第一次註冊的人
                 try:
                     UserData.objects.create(sPhone=phone, sPhoneAuth=True)
+                    print(phone+" is new to SMS")
                 except:
                     return HttpResponse("寫入資料庫發生問題")
 

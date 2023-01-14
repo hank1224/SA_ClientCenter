@@ -22,8 +22,7 @@ def submitUserData(request):
             userauth=""
             for i in userdata:
                 userauth = i.sPhoneAuth
-            # print(userauth,Phone)
-            # print(request.session['UserID'])
+            print("Name:"+Name+", have saved profile")
             if userauth == True:
                 try:
                     UserData.objects.get(sPhone=Phone)

@@ -17,9 +17,6 @@ def index_page(request):
     alert = request.GET.get('access')
     return render(request, 'index.html', locals())
 
-def in_page(request):
-    return render(request, 'in.html')
-
 @csrf_exempt
 def callback(request):
     if request.method == 'GET':
@@ -39,11 +36,10 @@ def callback(request):
             'client_secret': settings.LINE_CHANNEL_SECRET
         }
         response = requests.post(url, headers=headers, data=data)
-
         access_token = response.json().get('access_token')
 
         #拒絕受予權限的話
-        print(access_token)
+        # print(access_token)
 
         if access_token == None:
             return HttpResponseRedirect('/UserInterfaceApp/alert_accessNO.html')
@@ -76,6 +72,7 @@ def callback(request):
                     pictureUrl = None
                 try:
                     UserData.objects.create(sLineID=userId, sNickName=displayName, sPictureUrl=pictureUrl)
+                    print(displayName+" is new to Line")
                 except:
                     return HttpResponse("寫入資料庫發生問題")
 

@@ -1,0 +1,49 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body>
+<p><strong><a href="{{ SACC_NGROK }}/admin">後台：(ngrok地址)/admin</a></strong></p>
+<p><strong><a href="{{ SACC_NGROK }}/UserInterfaceApp/login_noAccount.html">首頁：(ngrok地址)/UserInterfaceApp/login_noAccount.html</a></strong></p>
+<p> <strong><a href="{{ SACC_NGROK }}/RESTapiApp/">API：(ngrok地址)/RESTapiApp/</a></strong></p>
+<p> <code>/RESTapiApp/Line_1/</code></p>
+<ul>
+<li><p>用戶傳送:Rbackurl</p>
+<ul>
+<li>回傳:Rstate</li>
+</ul>
+</li>
+</ul>
+<p><code>/RESTapiApp/Line_2/</code></p>
+<ul>
+<li><p>用戶傳送:Rstate</p>
+<ul>
+<li>回傳:RuserID, Raccess_code</li>
+</ul>
+</li>
+</ul>
+<p><code>/RESTapiApp/Access/</code></p>
+<ul>
+<li><p>用戶傳送:Raccess_code</p>
+<ul>
+<li>回傳：所有個人資料</li>
+</ul>
+</li>
+</ul>
+<p><code>/RESTapiApp/SMS_1/</code></p>
+<ul>
+<li><p>用戶傳送:Rphone</p>
+<ul>
+<li>回傳:RSMSid</li>
+</ul>
+</li>
+</ul>
+<p><code>/RESTapiApp/SMS_2/</code></p>
+<ul>
+<li><p>用戶傳送:RSMSid, RSMS_code</p>
+<ul>
+<li>回傳:RuserID, Raccess_code</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://ngrok.com/">使用轉發：ngrok</a>（記得去辦會員就不會過期了）</p>
+</body></html>
