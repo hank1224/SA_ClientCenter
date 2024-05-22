@@ -11,7 +11,7 @@
     <img src=".github/img/螢幕擷取畫面 2023-10-26 154103.png" width=30%>
 </div>
 
-## 後台管理介面
+## 資料去識別化設計
 
 <img src=".github/img/螢幕擷取畫面 2023-10-26 154647.png" width=100%>
 <img src=".github/img/螢幕擷取畫面 2023-10-26 154704.png" width=100%>
