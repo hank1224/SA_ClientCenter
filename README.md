@@ -18,6 +18,11 @@
 <img src=".github/img/螢幕擷取畫面 2023-10-26 154725.png" width=100%>
 <img src=".github/img/螢幕擷取畫面 2023-10-26 155455.png" width=100%>
 
+## 班級教學紀錄
+[![教學](https://img.youtube.com/vi/aL8_MLRYHH0/sddefault.jpg)](https://youtu.be/aL8_MLRYHH0?si=aGa_VIqOoTxXw_ll)
+
+https://youtu.be/aL8_MLRYHH0?si=S6VWHiUBje4jyaCD
+
 
 ## API對接 & 使用說明
 
