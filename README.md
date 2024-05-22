@@ -1,10 +1,33 @@
-## 此為陳澔恩爆肝一個禮拜寫出的系統，瞟竊程式碼前請先摸摸你的良心
+# SA_CC 中心資料交換API伺服器
 
-如果想不透API為何回傳錯誤，可以到/apps/RESTapiApp/views.py 查詢try catch報錯原理
+在系統設計與分析課程期末時，班上各個組別都為減碳商家，提供不同的服務，因此需要一個資料中心，來讓各個組別存取使用者資料，並達到保護隱私的效果。
+
+在此期間我挺身而出，引領全班設計此系統，並且統一對接標準，讓所有人得以安全存放他們客戶的資料，同時保證隱私。
+
+## 系統架構
+
+<div>
+    <img src=".github/img/3b388547-d0e0-4b2b-9ac9-35d44ff0fdc5.png" width=60%>
+    <img src=".github/img/螢幕擷取畫面 2023-10-26 154103.png" width=30%>
+</div>
+
+## 後台管理介面
+
+<img src=".github/img/螢幕擷取畫面 2023-10-26 154647.png" width=100%>
+<img src=".github/img/螢幕擷取畫面 2023-10-26 154704.png" width=100%>
+<img src=".github/img/螢幕擷取畫面 2023-10-26 154725.png" width=100%>
+<img src=".github/img/螢幕擷取畫面 2023-10-26 155455.png" width=100%>
+
+
+## API對接 & 使用說明
+
+### 此為陳澔恩爆肝一個禮拜寫出的系統，瞟竊程式碼前請先摸摸你的良心
+
+如果想不透API為何回傳錯誤，可以到[/apps/RESTapiApp/views.py](SA_ClientCenter/apps/RESTapiApp/views.py) 查詢try catch報錯原理
 
 **首頁：(ngrok地址)/UserInterfaceApp/login_noAccount.html**
 
- **API：(ngrok地址)/RESTapiApp/**
+**API：(ngrok地址)/RESTapiApp/**
 
  `/RESTapiApp/Line_1/`
  
